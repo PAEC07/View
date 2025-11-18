@@ -79,3 +79,7 @@ body {
 .guest:hover {
     opacity: 0.8;
 }
+.title {
+    font-size: 24px;
+    margin: 0 0 10px 0;
+}
