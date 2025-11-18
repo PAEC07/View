@@ -13,25 +13,23 @@
     <div class="login-card">
 
         <div class="logo">
-            <img src="img/kino_logo.png" alt="Kino Logo">
+            <img src="img/kino_logo_whitebg.png" alt="Kino Logo">
         </div>
 
         <p class="hint">Melden Sie sich an oder fahren Sie als Gast fort</p>
 
         <form method="post" action="/login" class="form-grid">
-
             <input type="text" name="username" placeholder="Benutzername" required>
             <input type="password" name="password" placeholder="Passwort" required>
-
             <button type="submit" class="btn-login">Log in</button>
-
         </form>
 
         <div class="divider">oder</div>
 
-<a class="guest" href="/guest">Als Gast fortfahren</a>
-<br><br>
-<a class="guest" href="register.html">Neu hier? Jetzt registrieren</a>
+        <!-- Für die Demo: Gast = zurück zur Hauptseite -->
+        <a class="guest" href="index.html">Als Gast fortfahren</a>
+        <br>
+        <a class="guest" href="register.html">Neu hier? Jetzt registrieren</a>
 
     </div>
 

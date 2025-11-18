@@ -13,27 +13,16 @@
     <div class="login-card">
 
         <div class="logo">
-            <img src="img/kino_logo.png" alt="Kino Logo">
+            <img src="img/kino_logo_whitebg.png" alt="Kino Logo">
         </div>
 
         <h2 class="title">Registrieren</h2>
         <p class="hint">Erstellen Sie ein Konto, um Buchungen zu speichern.</p>
 
-        <!-- Formular für Spring-Boot-Registrierung -->
         <form method="post" action="/register" class="form-grid">
-            <!-- Spring Security erwartet später nur, 
-                 dass username & password gespeichert werden.
-                 Die restlichen Felder sind für dich / DB. -->
+            <input type="text" name="username" placeholder="Benutzername" required>
 
-            <input type="text"
-                   name="username"
-                   placeholder="Benutzername"
-                   required>
-
-            <input type="email"
-                   name="email"
-                   placeholder="E-Mail-Adresse"
-                   required>
+            <input type="email" name="email" placeholder="E-Mail-Adresse" required>
 
             <input type="password"
                    name="password"

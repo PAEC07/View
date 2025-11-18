@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: #f3f3f3;
+    background: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,7 +21,7 @@ body {
     padding: 40px;
     border-radius: 8px;
     border-left: 5px solid #3cb371;
-    box-shadow: 0 0 6px rgba(0,0,0,0.12);
+    box-shadow: 0 0 12px rgba(0,0,0,0.15);
     text-align: center;
 }
 
@@ -34,6 +34,11 @@ body {
 .hint {
     font-size: 16px;
     margin-bottom: 30px;
+}
+
+.title {
+    font-size: 24px;
+    margin: 0 0 10px 0;
 }
 
 .form-grid {
@@ -78,8 +83,4 @@ body {
 
 .guest:hover {
     opacity: 0.8;
-}
-.title {
-    font-size: 24px;
-    margin: 0 0 10px 0;
 }

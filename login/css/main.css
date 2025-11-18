@@ -1,0 +1,311 @@
+/* Global: Breite im Griff behalten */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;   /* horizontales Scrollen unterbinden */
+}
+
+/* Grundlayout */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f3f3;
+    font-size: 18px;
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+/* Topbar oben */
+.topbar {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 30px;
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* Login-Button oben rechts */
+.btn-outline {
+    padding: 10px 22px;
+    border-radius: 6px;
+    border: 2px solid #3cb371;
+    text-decoration: none;
+    color: #3cb371;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.btn-outline:hover {
+    background: #3cb371;
+    color: #ffffff;
+}
+
+/* Rundes Logo oben rechts */
+.logo-round {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: contain;
+    background: #ffffff;
+    padding: 6px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+/* Hauptlayout: links / rechts nebeneinander */
+.page {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    min-height: calc(100vh - 110px);
+}
+
+/* linke Spalte: Filter + Filmliste untereinander */
+.left-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 0; /* wichtig, damit die Liste sauber scrollen kann */
+}
+
+/* rechte Spalte: Inhalt / Buchung */
+.right-column {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* FILTER */
+.filter {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 5px solid #3cb371;
+    box-shadow: 0 0 6px rgba(0,0,0,0.12);
+}
+
+.filter-title {
+    margin-top: 0;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.filter-field {
+    min-width: 170px;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-field select,
+.filter-field input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    font-size: 18px;
+}
+
+/* FILMLISTE – füllt den ganzen Rest der Spalte nach unten */
+.liste {
+    background: #ffffff;
+    border-radius: 8px;
+    border-left: 5px solid #3cb371;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 0 0 6px rgba(0,0,0,0.12);
+
+    flex: 1;       /* Höhe auffüllen */
+    min-height: 0; /* damit das Overflow sauber funktioniert */
+}
+
+.liste h2 {
+    margin: 0 0 15px 0;
+    font-size: 24px;
+}
+
+.liste ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.liste li {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 2px solid #3cb371;
+    background: #ffffff;
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.2s;
+}
+
+.liste li:hover {
+    background: #f0f0f0;
+}
+
+.liste li.aktiv {
+    background: #e6ffe6;
+    border-color: #2f9d63;
+}
+
+/* INHALT + BUCHUNG (rechte Spalte) */
+.inhalt,
+.buchen-box {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 5px solid #3cb371;
+    box-shadow: 0 0 6px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.inhalt-text {
+    font-size: 20px;
+}
+
+/* Info-Feld Inhalt */
+.film-info {
+    margin-top: 25px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    font-size: 22px;
+    line-height: 1.7;
+}
+
+.film-info div {
+    margin-bottom: 12px;
+}
+
+/* BUCHUNGSGRID */
+.buchung-rahmen {
+    margin-top: 25px;
+    border: 3px solid #3cb371;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.buchung-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background: #f7f7f7;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.buchung-col {
+    font-size: 20px;
+}
+
+.buchung-col h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.preis-zeile {
+    margin-bottom: 10px;
+}
+
+.preis-zeile span {
+    float: right;
+}
+
+.karten-feld {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.karten-feld label {
+    margin-bottom: 4px;
+}
+
+.karten-feld select {
+    border: 2px solid red;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 18px;
+}
+
+.erm-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.erm-bereich {
+    border: 3px solid #00c0c0;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 5px;
+}
+
+.erm-bereich.hidden {
+    display: none;
+}
+
+/* SUMME */
+.summe-row {
+    grid-column: 1 / span 2;
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 2px solid #ccc;
+    font-size: 22px;
+}
+
+/* Buttons unten */
+.buttons-row {
+    margin-top: auto;
+    padding-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    font-size: 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+}
+
+.btn-green {
+    background: #3cb371;
+}
+
+.btn-grey {
+    background: #777777;
+}
+
+.btn:hover {
+    filter: brightness(90%);
+}

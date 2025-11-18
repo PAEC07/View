@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kino – Filmübersicht</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="topbar-right">
+        <a href="login.html" class="btn-outline">Login</a>
+        <img src="img/kino_logo_whitebg.png" alt="Kino Logo" class="logo-round">
+    </div>
+</header>
+
+<main class="page">
+
+    <!-- LINKE SPALTE: Filter + Filmliste -->
+    <section class="left-column">
+
+        <!-- FILTER -->
+        <section class="filter">
+            <h3 class="filter-title">Filtern nach</h3>
+
+            <div class="filter-row">
+                <div class="filter-field">
+                    <label>Format</label>
+                    <select>
+                        <option value="">Alle</option>
+                        <option value="2d">2D</option>
+                        <option value="3d">3D</option>
+                    </select>
+                </div>
+
+                <div class="filter-field">
+                    <label>FSK</label>
+                    <select>
+                        <option value="">Alle</option>
+                        <option>6</option>
+                        <option>12</option>
+                        <option>16</option>
+                        <option>18</option>
+                    </select>
+                </div>
+
+                <div class="filter-field">
+                    <label>Bereich</label>
+                    <select>
+                        <option value="">Alle</option>
+                        <option>Parkett</option>
+                        <option>Loge</option>
+                    </select>
+                </div>
+
+                <div class="filter-field">
+                    <label>Datum</label>
+                    <input type="date">
+                </div>
+            </div>
+        </section>
+
+        <!-- FILMLISTE -->
+        <aside class="liste">
+            <h2>Filme</h2>
+            <ul>
+                <li data-titel="Film 1" data-beschreibung="Spannender Actionfilm." data-fsk="16" data-format="3D" data-preis="12.99">Film 1</li>
+                <li data-titel="Film 2" data-beschreibung="Romantische Komödie." data-fsk="12" data-format="2D" data-preis="9.99">Film 2</li>
+                <li data-titel="Film 3" data-beschreibung="Science-Fiction Abenteuer." data-fsk="6" data-format="3D" data-preis="14.50">Film 3</li>
+            </ul>
+        </aside>
+
+    </section>
+
+    <!-- RECHTE SPALTE: Inhalt / Buchung -->
+    <section class="right-column">
+
+        <!-- INHALT -->
+        <section class="inhalt" id="inhaltBox">
+            <h2 id="inhaltTitel">Inhalt</h2>
+            <p id="inhaltText" class="inhalt-text">Wähle links einen Film aus.</p>
+
+            <div class="film-info" id="filmInfoDetails" style="display:none;">
+                <div><strong>FSK:</strong> <span id="infoFsk"></span></div>
+                <div><strong>Kategorie:</strong> <span id="infoFormat"></span></div>
+                <div><strong>Preis pro Karte:</strong> <span id="infoPreis"></span> €</div>
+            </div>
+
+            <div class="buttons-row">
+                <button class="btn btn-green" id="buchenBtn">Buchen</button>
+            </div>
+        </section>
+
+        <!-- BUCHUNG -->
+        <section class="buchen-box hidden" id="buchenBox">
+            <h2>Buchung</h2>
+            <p class="inhalt-text">Wähle die Anzahl der Karten und bestätige deine Buchung.</p>
+
+            <div class="buchung-rahmen">
+                <div class="buchung-grid">
+
+                    <!-- linke Spalte: Preise -->
+                    <div class="buchung-col" id="preisSpalte">
+                        <h3>Preis</h3>
+                        <div class="preis-zeile">
+                            Erwachsene
+                            <span id="preisErwachsene">0,00 €</span>
+                        </div>
+                        <div class="preis-zeile">
+                            Studenten
+                            <span>-20 %</span>
+                        </div>
+                        <div class="preis-zeile">
+                            Senioren
+                            <span>-15 %</span>
+                        </div>
+                        <div class="preis-zeile">
+                            Kinder
+                            <span>-30 %</span>
+                        </div>
+                    </div>
+
+                    <!-- rechte Spalte: Karten -->
+                    <div class="buchung-col">
+                        <h3>Karten</h3>
+
+                        <div class="karten-feld">
+                            <label for="anzahlVoll">Anzahl (Erwachsene)</label>
+                            <select id="anzahlVoll" name="anzahlVoll">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+
+                        <div class="erm-box">
+                            <input type="checkbox" id="ermCheck">
+                            <label for="ermCheck">Ermäßigungen</label>
+                        </div>
+
+                        <div id="ermBereich" class="erm-bereich hidden">
+                            <div class="karten-feld">
+                                <label for="anzahlStudent">Studenten</label>
+                                <select id="anzahlStudent" name="anzahlStudent">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+
+                            <div class="karten-feld">
+                                <label for="anzahlSenior">Senioren</label>
+                                <select id="anzahlSenior" name="anzahlSenior">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+
+                            <div class="karten-feld">
+                                <label for="anzahlKinder">Kinder</label>
+                                <select id="anzahlKinder" name="anzahlKinder">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summe -->
+                    <div class="summe-row">
+                        <strong>Summe:</strong> <span id="summeAnzeige">0,00 €</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons-row">
+                <button class="btn btn-grey" id="zurueckBtn">Zurück</button>
+                <button class="btn btn-green" id="bezahlenBtn">Bezahlen</button>
+            </div>
+        </section>
+
+    </section>
+
+</main>
+
+<script src="js/app.js" defer></script>
+
+</body>
+</html>
