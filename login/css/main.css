@@ -249,7 +249,7 @@ body {
 }
 
 .karten-feld select {
-    border: 2px solid red;
+    border: 2px solid rgb(47, 0, 255);
     border-radius: 6px;
     padding: 6px;
     font-size: 18px;

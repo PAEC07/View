@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kino – Filmübersicht</title>
+    <link rel="stylesheet" href="css/acc.css">
+</head>
+<body>
+    <header class="topbar">
+    <div class="topbar-right">
+        <a href="login.html" class="btn-outline">Abmelden</a>
+        <img src="img/kino_logo_whitebg.png" alt="Kino Logo" class="logo-round">
+    </div>
+</header>
+<main class="page">
+<section class="left-column">
+
+    
+    <aside class="liste">
+        <h2>Tickets</h2>
+        <ul>
+            <!--Liste der Tickets einbauen-->
+            <li><span id="inhaltTitel"></span></li>
+        </ul>
+    </aside>
+</section>
+<selection class="right-column">
+    <div id="detailsWrapper" class="Acc-DetailsWrapper">
+        <h2 class="AccDetails-top">Account Details</h2>
+        <div id="AccDetails" >
+            <div class="acc-info-details-field"><p><strong>Benutzername:</strong> <span id="inhaltBenutzername"></span></p></div>
+            <div class="acc-info-details-field"><p><strong>E-Mail:</strong> <span id="inhaltEmail"></span></p></div>
+            <div class="acc-info-details-field"><p><strong>Registrierungsdatum:</strong> <span id="inhaltRegistrierungsdatum"></span></p></div>
+            <div class="acc-info-details-field"><p><strong>Passwort</strong><span id="inhaltPasswort"></span></p></div>
+            
+            
+            
+        </div>
+        
+            <div class="btn btn-change" id="btnändern">Ändern</div>
+        
+    </div>
+        
+    <script src="js/app.js" defer></script>
+
+</body>
+</html>
