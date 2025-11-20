@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inhaltText = document.getElementById('inhaltText');
     const buchen = document.getElementById('buchen');
     const detailsWrapper = document.getElementById('detailsWrapper');
-    Boolean LogIN = false;
+    
     
     
     const inhaltfilm =  document.getElementById('Deails');
