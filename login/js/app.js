@@ -4,7 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const buchenBox = document.getElementById('buchenBox');
     const inhaltTitel = document.getElementById('inhaltTitel');
     const inhaltText = document.getElementById('inhaltText');
-
+    const buchen = document.getElementById('buchen');
+    const detailsWrapper = document.getElementById('detailsWrapper');
+    Boolean LogIN = false;
+    
+    
+    const inhaltfilm =  document.getElementById('Deails');
     const infoBox = document.getElementById('filmInfoDetails');
     const infoFsk = document.getElementById('infoFsk');
     const infoFormat = document.getElementById('infoFormat');
@@ -53,30 +58,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Film anklicken
-    filme.forEach(li => {
+        filme.forEach(li => {
         li.addEventListener('click', () => {
-            filme.forEach(e => e.classList.remove('aktiv'));
-            li.classList.add('aktiv');
-
-            aktuellerFilm = li;
-
-            inhaltTitel.textContent = li.dataset.titel;
-            inhaltText.textContent  = li.dataset.beschreibung;
-
-            infoFsk.textContent     = li.dataset.fsk;
-            infoFormat.textContent  = li.dataset.format;
-            infoPreis.textContent   = li.dataset.preis;
-            infoBox.style.display   = 'block';
-
-            grundpreis = parseFloat(li.dataset.preis) || 0;
-            preisErwachsene.textContent = formatEuro(grundpreis);
-            aktualisiereSumme();
-
-            // Inhalt anzeigen, Buchung ausblenden
-            buchenBox.classList.add('hidden');
-            inhaltBox.classList.remove('hidden');
-        });
-    });
+       // Auswahl markieren
+       filme.forEach(e => e.classList.remove('aktiv'));
+       li.classList.add('aktiv');
+       aktuellerFilm = li;
+       // Texte setzen
+       inhaltTitel.textContent = li.dataset.titel;
+       inhaltText.textContent  = li.dataset.beschreibung;
+       infoFsk.textContent     = li.dataset.fsk;
+       infoFormat.textContent  = li.dataset.format;
+       infoPreis.textContent   = formatEuro(parseFloat(li.dataset.preis) || 0);
+       // HIER: Details-Bereich sichtbar machen
+       detailsWrapper.classList.remove('hidden');
+       
+       //Butten Prüfung muss noch durchgeführt werden !
+       
+       // Buchung aus, Inhalt an (hast du schon)
+       buchenBox.classList.add('hidden');
+       inhaltBox.classList.remove('hidden');
+       // Summe neu berechnen wie gehabt
+       grundpreis = parseFloat(li.dataset.preis) || 0;
+       preisErwachsene.textContent = formatEuro(grundpreis);
+       aktualisiereSumme();
+   });
+});
 
     // Buchen-Button
     buchenBtn.addEventListener('click', () => {
@@ -86,12 +93,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         inhaltBox.classList.add('hidden');
         buchenBox.classList.remove('hidden');
+        inhaltfilm.classList.add('hidden');
+
     });
 
     // Zurück-Button
     zurueckBtn.addEventListener('click', () => {
         buchenBox.classList.add('hidden');
         inhaltBox.classList.remove('hidden');
+        inhaltfilm.classList.remove('hidden');
     });
 
     // "Bezahlen" Demo
@@ -118,5 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Startzustand: Inhalt sichtbar, Buchung versteckt
     inhaltBox.classList.remove('hidden');
+    inhaltfilm.classList.add('hidden');
     buchenBox.classList.add('hidden');
+    buchen.classList.add('hidden');
 });

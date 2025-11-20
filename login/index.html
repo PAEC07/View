@@ -53,6 +53,15 @@
                         <option>Loge</option>
                     </select>
                 </div>
+                <div class="filter-field">
+                    <label>Stiel</label>
+                    <select>
+                        <option value="">Alle</option>
+                        <option>Horror</option>
+                        <option>Komödie</option>
+                    </select>
+                </div>
+
 
                 <div class="filter-field">
                     <label>Datum</label>
@@ -77,27 +86,55 @@
     <section class="right-column">
 
         <!-- INHALT -->
-        <section class="inhalt" id="inhaltBox">
-            <h2 id="inhaltTitel">Inhalt</h2>
-            <p id="inhaltText" class="inhalt-text">Wähle links einen Film aus.</p>
-
-            <div class="film-info" id="filmInfoDetails" style="display:none;">
-                <div><strong>FSK:</strong> <span id="infoFsk"></span></div>
-                <div><strong>Kategorie:</strong> <span id="infoFormat"></span></div>
-                <div><strong>Preis pro Karte:</strong> <span id="infoPreis"></span> €</div>
-            </div>
-
-            <div class="buttons-row">
-                <button class="btn btn-green" id="buchenBtn">Buchen</button>
-            </div>
-        </section>
+            <section id="inhaltBox" class="inhalt">
+            <h2 id="inhaltTitel">Bitte einen Film auswählen</h2>
+                <div id="detailsWrapper" class="hidden">
+                    <div class="details-row">
+                        <div class="details-left">
+                            
+                                <div><strong>FSK: </strong><span id="infoFsk"></span></div>
+                                <div><strong>Format: </strong><span id="infoFormat"></span></div>
+                                <div><strong>Kategorie: </strong><span id="infoKategorie"></span></div>
+                                <div><strong>Preis pro Karte: </strong><span id="infoPreis"></span></div>
+                        </div>
+                        <div class="details-right">
+                            <p id="inhaltText"></p>
+                        </div>
+                    </div>
+                <div class="details-table-wrapper">
+                    <table class="details-table">
+                    <thead>
+                <tr>
+                    <th>Datum</th>
+                    <th>Uhrzeit</th>
+                    <th>Saal</th>
+                </tr>
+                    </thead>
+                        <tbody id="vorstellungenTbody">
+                        </tbody>
+                    </table>
+                </div>
+                    </div>
+                <div class="buttons-row" id= "buchen">
+                    <button id="buchenBtn" class="btn btn-green" type="button">Buchen</button>
+                </div>
+            </section>
+        
+         
+            
+            
+        
+            
+       
 
         <!-- BUCHUNG -->
         <section class="buchen-box hidden" id="buchenBox">
             <h2>Buchung</h2>
             <p class="inhalt-text">Wähle die Anzahl der Karten und bestätige deine Buchung.</p>
 
-            <div class="buchung-rahmen">
+            <div 
+
+             class="buchung-rahmen">
                 <div class="buchung-grid">
 
                     <!-- linke Spalte: Preise -->
