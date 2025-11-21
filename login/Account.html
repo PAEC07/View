@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -10,6 +11,7 @@
     <header class="topbar">
     <div class="topbar-right">
         <a href="login.html" class="btn-outline">Abmelden</a>
+        <a href="index.html" class="btn-outline">Zurück</a>
         <img src="img/kino_logo_whitebg.png" alt="Kino Logo" class="logo-round">
     </div>
 </header>
@@ -35,14 +37,41 @@
             <div class="acc-info-details-field"><p><strong>Passwort</strong><span id="inhaltPasswort"></span></p></div>
             
             
+            <!-- Modal content -->
             
+            <div id="myModal" class="modal">
+            
+                <div class="amodal-content passwort-check">  
+                    <span class="close">&times;</span>
+                <p>Hier können  sie nun ihre Benutzerdaten Aktualisiern</p>
+                    <section class="model-left-column">
+            <div class="acc-info-details-field"><p><strong>Benutzername: </strong>
+                <input class="model-Input" type="password" id="ModelinhaltBenutzername"/></input>
+            </div>
+            <div class="acc-info-details-field"><p><strong>E-Mail:  </strong> 
+                <input class="model-Input" id="ModelinhaltPassword"></input></p>
+            </div>
+            <div class="acc-info-details-field"><p><strong>Passwort:  </strong>
+                <input class="model-Input" id="ModelinhaltMail"/></input>
+            </div>
+                        <div class="btn btn-change" id="Save">Speichern</div>
+                </selection>
+                    
+            
+            </div>
+
         </div>
-        
-            <div class="btn btn-change" id="btnändern">Ändern</div>
+            
+
+
+        <div class="btn btn-change" id="btnändern">Ändern</div>
+        <div class="btn btn-delete" id="delete">Konto löschen</div>
+
+            </div>
         
     </div>
         
+    <script src="js/acc.js" defer></script>
     <script src="js/app.js" defer></script>
-
 </body>
 </html>
