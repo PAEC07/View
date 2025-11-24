@@ -174,9 +174,9 @@ document.addEventListener('DOMContentLoaded', () => {
    
    var btndelete = document.getElementByID("delete");
 
-    function delete(){
-  alert('Wollen sie dieses konto Wirklich löschen ?\n'+ 'Eine wiederherstllung ist nicht möglich');
-}
+    function deleteAccount() {
+        alert('Wollen sie dieses Konto wirklich löschen?\nEine Wiederherstellung ist nicht möglich.');
+    }
    
 });
 
