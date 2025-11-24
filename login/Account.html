@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -17,35 +16,111 @@
 </header>
 
 <main class="page">
-<section class="left-column">
+    <!-- LINKE SPALTE: Tickets -->
+    <section class="left-column">
+        <aside class="liste">
+            <h2>Tickets</h2>
+            <ul>
+                <!-- Beispiel-Tickets, später durch echte Daten ersetzen -->
+                <li data-ticket-id="1">
+                    <div class="ticket-row">
+                        <div class="ticket-info">
+                            <div class="ticket-title">Actionheld 3000</div>
+                            <div class="ticket-meta">
+                                <span>Datum: 25.11.2025</span>
+                                <span>Vorstellung: 20:15 Uhr</span>
+                            </div>
+                        </div>
+                        <button class="ticket-cancel-btn">Stornieren</button>
+                    </div>
+                </li>
 
-    
-    <aside class="liste">
-        <h2>Tickets</h2>
-        <ul>
-            <!--Liste der Tickets einbauen-->
-            <li><span id="inhaltTitel"></span></li>
-        </ul>
-    </aside>
-</section>
-<selection class="right-column">
-    <div id="detailsWrapper" class="Acc-DetailsWrapper">
-        <h2 class="AccDetails-top">Account Details</h2>
-        <div id="AccDetails" >
-            <div class="acc-info-details-field"><p><strong>Benutzername:</strong> <span id="inhaltBenutzername"></span></p></div>
-            <div class="acc-info-details-field"><p><strong>E-Mail:</strong> <span id="inhaltEmail"></span></p></div>
-            <div class="acc-info-details-field"><p><strong>Registrierungsdatum:</strong> <span id="inhaltRegistrierungsdatum"></span></p></div>
-            <div class="acc-info-details-field"><p><strong>Passwort</strong><span id="inhaltPasswort"></span></p></div>
-            
-            
-            
-        </div>
-        
+                <li data-ticket-id="2">
+                    <div class="ticket-row">
+                        <div class="ticket-info">
+                            <div class="ticket-title">Romantik im Regen</div>
+                            <div class="ticket-meta">
+                                <span>Datum: 26.11.2025</span>
+                                <span>Vorstellung: 18:30 Uhr</span>
+                            </div>
+                        </div>
+                        <button class="ticket-cancel-btn">Stornieren</button>
+                    </div>
+                </li>
+
+                <li data-ticket-id="3">
+                    <div class="ticket-row">
+                        <div class="ticket-info">
+                            <div class="ticket-title">Animierte Abenteuer</div>
+                            <div class="ticket-meta">
+                                <span>Datum: 27.11.2025</span>
+                                <span>Vorstellung: 14:00 Uhr</span>
+                            </div>
+                        </div>
+                        <button class="ticket-cancel-btn">Stornieren</button>
+                    </div>
+                </li>
+            </ul>
+        </aside>
+    </section>
+
+    <!-- RECHTE SPALTE: Account-Details -->
+    <section class="right-column">
+        <div id="detailsWrapper" class="Acc-DetailsWrapper">
+            <h2 class="AccDetails-top">Account Details</h2>
+
+            <div id="AccDetails">
+                <div class="acc-info-details-field">
+                    <p><strong>Benutzername:</strong> <span id="inhaltBenutzername">demo_user</span></p>
+                </div>
+
+                <div class="acc-info-details-field">
+                    <p><strong>E-Mail:</strong> <span id="inhaltEmail">user@example.com</span></p>
+                </div>
+
+                <div class="acc-info-details-field">
+                    <p><strong>Registrierungsdatum:</strong> <span id="inhaltRegistrierungsdatum">01.01.2025</span></p>
+                </div>
+
+                <div class="acc-info-details-field">
+                    <p><strong>Passwort:</strong> <span id="inhaltPasswort">••••••••</span></p>
+                </div>
+            </div>
+
+            <!-- Button öffnet Modal -->
             <div class="btn btn-change" id="btnändern">Ändern</div>
-        
-    </div>
-        
-    <script src="js/app.js" defer></script>
+        </div>
+    </section>
+</main>
 
+<!-- MODAL-OVERLAY (außerhalb von main, damit es über alles gelegt werden kann) -->
+<div id="modalOverlay" class="modal-overlay">
+    <div class="modal passwort-check">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <h2>Benutzerdaten bearbeiten</h2>
+        <p>Hier können Sie nun Ihre Benutzerdaten aktualisieren.</p>
+
+        <section class="modal-left-column">
+            <div class="acc-info-details-field">
+                <p><strong>Benutzername: </strong></p>
+                <input class="modal-input" type="text" id="ModelinhaltBenutzername">
+            </div>
+
+            <div class="acc-info-details-field">
+                <p><strong>E-Mail: </strong></p>
+                <input class="modal-input" type="email" id="ModelinhaltEmail">
+            </div>
+
+            <div class="acc-info-details-field">
+                <p><strong>Passwort: </strong></p>
+                <input class="modal-input" type="password" id="ModelinhaltPasswort">
+            </div>
+
+            <div class="btn btn-change" id="Save">Speichern</div>
+        </section>
+    </div>
+</div>
+
+<script src="js/acc.js" defer></script>
 </body>
 </html>

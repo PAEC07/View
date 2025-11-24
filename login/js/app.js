@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
  
 
    // Wenn du testen willst, dass der Buchen-Bereich erscheint: hier true setzen
-   let loginStatus = false;
+   let loginStatus = true464;
 
    const inhaltfilm   = document.getElementById('Deails');           // check Schreibweise im HTML!
    const infoBox      = document.getElementById('filmInfoDetails');

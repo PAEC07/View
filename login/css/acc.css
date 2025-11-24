@@ -118,7 +118,7 @@ html, body {
     padding: 12px;
 }
 
-/* NEU: Zeile im Ticket – links Infos, rechts Button */
+/* Zeile im Ticket – links Infos, rechts Button */
 .ticket-row {
     display: flex;
     justify-content: space-between;
@@ -144,6 +144,22 @@ html, body {
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
+}
+
+/* Stornieren-Button im Ticket */
+.ticket-cancel-btn {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 12px;
+    background: #c0392b;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.ticket-cancel-btn:hover {
+    filter: brightness(90%);
 }
 
 /* =============================
@@ -173,7 +189,7 @@ html, body {
     flex: 1;
 }
 
-/* EACH INFO FIELD */
+/* Info-Felder rechts */
 
 .acc-info-details-field {
     border: 1px solid #bbb;
@@ -185,32 +201,24 @@ html, body {
 .acc-info-details-field p {
     margin: 0;
     font-size: 18px;
-    overflow-y: auto;
-    margin: 20px;
 }
-.AccDetails-top{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-}
+
+/* =============================
+   BUTTON: ÄNDERN (rechts & im Modal)
+============================= */
+
 .btn-change {
     padding: 12px 36px;
-    border-radius: 6px;
+    border-radius: 18px;
     border: none;
     background: #452abb;
     color: white;
     font-size: 20px;
     cursor: pointer;
-    border-radius: 6px;
-    font-size: 20px;
-    text-align: center;
-    border-radius: 20px;
-    max-width: fit-content ;
-    margin: 20px;
-    justify-content: center;
-
+    align-self: flex-end;
+    margin-top: 20px;
 }
+
 .btn-change:hover {
     filter: brightness(90%);
 }
@@ -221,91 +229,67 @@ html, body {
 }
 
 /* =============================
-   STORNIEREN-BUTTON IM TICKET
+   MODAL OVERLAY
 ============================= */
 
-.ticket-cancel-btn {
-    padding: 6px 16px;
-    border: none;
-    border-radius: 12px;
-    background: #c0392b;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.2s ease;
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;                  /* wird per JS sichtbar gemacht */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
 }
 
-.ticket-cancel-btn:hover {
-    filter: brightness(90%);
+.modal-overlay.active {
+    display: flex;
 }
 
-/* Popup CSS */
-/* Popup container */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  border-radius: 20px;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  
-    
+    background: #ffffff;
+    padding: 20px 24px;
+    border-radius: 8px;
+    min-width: 320px;
+    max-width: 520px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    position: relative;
 }
 
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 60%; /* Could be more or less, depending on screen size */
-  font-size:  18px;
+/* X-Button oben rechts im Modal */
+.modal-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    cursor: pointer;
 }
 
-.passwort-check{
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  
-  width: 80%; /* Could be more or less, depending on screen size */
+/* Inhalt im Modal */
 
-
+.modal-left-column {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-.model-Input{
-padding: 14px;
+.modal-input {
+    width: 100%;
+    padding: 8px 10px;
     border-radius: 6px;
     border: 1px solid #bbb;
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+/* Speichern-Button innen etwas kleiner, aber gleiche Klasse */
+
+#Save {
+    margin-top: 10px;
+    align-self: flex-end;
     font-size: 18px;
-}
-.model-left-column {
-    flex: 1;
-    flex-direction: column;
-    gap: 5px;
-    min-height: 0; /* wichtig, damit die Liste sauber scrollen kann */
-}
-.model-right-column {
-    flex: 5;
-    flex-direction: column;
-    gap: 20px;
-    min-height: 0; /* wichtig, damit die Liste sauber scrollen kann */
+    padding-inline: 24px;
 }

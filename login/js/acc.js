@@ -1,30 +1,96 @@
-// When the user clicks on <div>, open the popup
-var modal = document.getElementById("myModal");
+document.addEventListener("DOMContentLoaded", () => {
+    // ==========================
+    // MODAL ELEMENTE
+    // ==========================
+    const openBtn = document.getElementById("btnändern");
+    const overlay = document.getElementById("modalOverlay");
+    const closeBtn = document.getElementById("modalClose");
+    const saveBtn = document.getElementById("Save");
 
-// Get the button that opens the modal
-var btnchange = document.getElementById("btnändern");
+    const spanName = document.getElementById("inhaltBenutzername");
+    const spanEmail = document.getElementById("inhaltEmail");
+    const spanPass = document.getElementById("inhaltPasswort");
 
+    const inputName = document.getElementById("ModelinhaltBenutzername");
+    const inputEmail = document.getElementById("ModelinhaltEmail");
+    const inputPass = document.getElementById("ModelinhaltPasswort");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+    function openModal() {
+        if (!overlay) return;
 
-// When the user clicks on the button, open the modal
-btnchange.onclick = function() {
-  modal.style.display = "block";
-}
+        // aktuelle Werte in Inputs übernehmen
+        if (spanName && inputName) inputName.value = spanName.textContent.trim();
+        if (spanEmail && inputEmail) inputEmail.value = spanEmail.textContent.trim();
+        if (inputPass) inputPass.value = "";
 
+        overlay.classList.add("active");
+    }
 
+    function closeModal() {
+        if (!overlay) return;
+        overlay.classList.remove("active");
+    }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
+    // Öffnen über "Ändern"
+    if (openBtn) {
+        openBtn.addEventListener("click", openModal);
+    }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+    // Schließen über X
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeModal);
+    }
 
+    // Schließen über Klick neben dem Modal
+    if (overlay) {
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) {
+                closeModal();
+            }
+        });
+    }
 
+    // Schließen über ESC
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            closeModal();
+        }
+    });
+
+    // Speichern: hier später Spring Boot call, jetzt nur UI-Update
+    if (saveBtn) {
+        saveBtn.addEventListener("click", () => {
+            if (spanName && inputName) spanName.textContent = inputName.value;
+            if (spanEmail && inputEmail) spanEmail.textContent = inputEmail.value;
+
+            // Passwort nur als •••• anzeigen, nicht im Klartext
+            if (spanPass && inputPass && inputPass.value.trim() !== "") {
+                spanPass.textContent = "••••••••";
+            }
+
+            // TODO: Hier später per fetch() an dein Spring-Boot-Backend schicken
+
+            closeModal();
+        });
+    }
+
+    // ==========================
+    // TICKET STORNIEREN (optional)
+    // ==========================
+
+    document.addEventListener("click", (e) => {
+        if (!e.target.classList.contains("ticket-cancel-btn")) return;
+
+        const li = e.target.closest("li");
+        const ticketId = li?.dataset.ticketId;
+
+        const ok = confirm("Ticket wirklich stornieren?");
+        if (!ok || !li) return;
+
+        // TODO: Hier Spring-Boot-DELETE-Aufruf einbauen, z.B.:
+        // fetch(`/api/tickets/${ticketId}`, { method: "DELETE" })
+
+        // Für jetzt: nur aus der Liste entfernen
+        li.remove();
+    });
+});
