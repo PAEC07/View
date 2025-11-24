@@ -11,6 +11,7 @@
 <header class="topbar">
     <div class="topbar-right">
         <a href="login.html" class="btn-outline">Login</a>
+        <!-- Wenn du rechts noch ein Icon hast, kannst du das hier ergänzen -->
         <img src="img/kino_logo_whitebg.png" alt="Kino Logo" class="logo-round">
     </div>
 </header>
@@ -53,15 +54,15 @@
                         <option>Loge</option>
                     </select>
                 </div>
+
                 <div class="filter-field">
-                    <label>Stiel</label>
+                    <label>Stil</label>
                     <select>
                         <option value="">Alle</option>
                         <option>Horror</option>
                         <option>Komödie</option>
                     </select>
                 </div>
-
 
                 <div class="filter-field">
                     <label>Datum</label>
@@ -71,12 +72,33 @@
         </section>
 
         <!-- FILMLISTE -->
-        <aside class="liste">
+        <aside class="liste" id="filmListe">
             <h2>Filme</h2>
             <ul>
-                <li data-titel="Film 1" data-beschreibung="Spannender Actionfilm." data-fsk="16" data-format="3D" data-preis="12.99">Film 1</li>
-                <li data-titel="Film 2" data-beschreibung="Romantische Komödie." data-fsk="12" data-format="2D" data-preis="9.99">Film 2</li>
-                <li data-titel="Film 3" data-beschreibung="Science-Fiction Abenteuer." data-fsk="6" data-format="3D" data-preis="14.50">Film 3</li>
+                <li data-titel="Film 1"
+                    data-beschreibung="Spannender Actionfilm."
+                    data-fsk="16"
+                    data-format="3D"
+                    data-kategorie="Action"
+                    data-preis="12.99">
+                    Film 1
+                </li>
+                <li data-titel="Film 2"
+                    data-beschreibung="Romantische Komödie."
+                    data-fsk="12"
+                    data-format="2D"
+                    data-kategorie="Komödie"
+                    data-preis="9.99">
+                    Film 2
+                </li>
+                <li data-titel="Film 3"
+                    data-beschreibung="Science-Fiction Abenteuer."
+                    data-fsk="6"
+                    data-format="3D"
+                    data-kategorie="Sci-Fi"
+                    data-preis="14.50">
+                    Film 3
+                </li>
             </ul>
         </aside>
 
@@ -86,153 +108,170 @@
     <section class="right-column">
 
         <!-- INHALT -->
-            <section id="inhaltBox" class="inhalt">
+        <section id="inhaltBox" class="inhalt">
             <h2 id="inhaltTitel">Bitte einen Film auswählen</h2>
-                <div id="detailsWrapper" class="hidden">
-                    <div class="details-row">
-                        <div class="details-left">
-                            
-                                <div><strong>FSK: </strong><span id="infoFsk"></span></div>
-                                <div><strong>Format: </strong><span id="infoFormat"></span></div>
-                                <div><strong>Kategorie: </strong><span id="infoKategorie"></span></div>
-                                <div><strong>Preis pro Karte: </strong><span id="infoPreis"></span></div>
-                        </div>
-                        <div class="details-right">
-                            <p id="inhaltText"></p>
-                        </div>
+
+            <div id="detailsWrapper" class="hidden">
+                <div class="details-row">
+                    <div class="details-left">
+                        <div><strong>FSK: </strong><span id="infoFsk"></span></div>
+                        <div><strong>Format: </strong><span id="infoFormat"></span></div>
+                        <div><strong>Kategorie: </strong><span id="infoKategorie"></span></div>
+                        <div><strong>Preis pro Karte: </strong><span id="infoPreis"></span></div>
                     </div>
-                <div class="details-table-wrapper">
+                    <div class="details-right">
+                        <p id="inhaltText"></p>
+                    </div>
+                </div>
+
+                <!-- Toggle Vorstellungen / Kalender -->
+                <div class="view-toggle">
+                    <button id="btnViewList" class="btn btn-small active-view" type="button">
+                        Vorstellungen
+                    </button>
+                    <button id="btnViewCalendar" class="btn btn-small" type="button">
+                        Kalender
+                    </button>
+                </div>
+
+                <!-- LISTENANSICHT DER VORSTELLUNGEN -->
+                <div class="details-table-wrapper" id="listenView">
                     <table class="details-table">
-                    <thead>
-                <tr>
-                    <th>Datum</th>
-                    <th>Uhrzeit</th>
-                    <th>Saal</th>
-                </tr>
-                    </thead>
+                        <thead>
+                            <tr>
+                                <th>Datum</th>
+                                <th>Uhrzeit</th>
+                                <th>Saal</th>
+                            </tr>
+                        </thead>
                         <tbody id="vorstellungenTbody">
+                            <!-- Kannst du später per JS / Backend füllen -->
                         </tbody>
                     </table>
                 </div>
-                    </div>
-                <div class="buttons-row" id= "buchen">
-                    <button id="buchenBtn" class="btn btn-green" type="button">Buchen</button>
-                    <button id="kalenderBtn" class="btn btn-green" type="button">Kalender anzeigen</button>
 
-                </div>
-            </section>
-        
-          
-       
+                <!-- KALENDER-ANSICHT DER VORSTELLUNGEN -->
+                <section id="kalenderView" class="kalender-view hidden">
+                    <h3>Kalenderansicht</h3>
 
-        <!-- BUCHUNG -->
-        <section class="buchen-box hidden" id="buchenBox">
-            <h2>Buchung</h2>
-            <p class="inhalt-text">Wähle die Anzahl der Karten und bestätige deine Buchung.</p>
-
-            <div 
-
-             class="buchung-rahmen">
-                <div class="buchung-grid">
-
-                    <!-- linke Spalte: Preise -->
-                    <div class="buchung-col" id="preisSpalte">
-                        <h3>Preis</h3>
-                        <div class="preis-zeile">
-                            Erwachsene
-                            <span id="preisErwachsene">0,00 €</span>
-                        </div>
-                        <div class="preis-zeile">
-                            Studenten
-                            <span>-20 %</span>
-                        </div>
-                        <div class="preis-zeile">
-                            Senioren
-                            <span>-15 %</span>
-                        </div>
-                        <div class="preis-zeile">
-                            Kinder
-                            <span>-30 %</span>
-                        </div>
+                    <div class="kalender-header">
+                        <button id="kalPrev" class="btn btn-grey" type="button">&lt;</button>
+                        <span id="kalMonatLabel"></span>
+                        <button id="kalNext" class="btn btn-grey" type="button">&gt;</button>
                     </div>
 
-                    <!-- rechte Spalte: Karten -->
-                    <div class="buchung-col">
-                        <h3>Karten</h3>
-
-                        <div class="karten-feld">
-                            <label for="anzahlVoll">Anzahl (Erwachsene)</label>
-                            <select id="anzahlVoll" name="anzahlVoll">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                        </div>
-
-                        <div class="erm-box">
-                            <input type="checkbox" id="ermCheck">
-                            <label for="ermCheck">Ermäßigungen</label>
-                        </div>
-
-                        <div id="ermBereich" class="erm-bereich hidden">
-                            <div class="karten-feld">
-                                <label for="anzahlStudent">Studenten</label>
-                                <select id="anzahlStudent" name="anzahlStudent">
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-
-                            <div class="karten-feld">
-                                <label for="anzahlSenior">Senioren</label>
-                                <select id="anzahlSenior" name="anzahlSenior">
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-
-                            <div class="karten-feld">
-                                <label for="anzahlKinder">Kinder</label>
-                                <select id="anzahlKinder" name="anzahlKinder">
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Summe -->
-                    <div class="summe-row">
-                        <strong>Summe:</strong> <span id="summeAnzeige">0,00 €</span>
-                    </div>
-                </div>
+                    <table class="kalender-tabelle">
+                        <thead>
+                            <tr>
+                                <th>Mo</th>
+                                <th>Di</th>
+                                <th>Mi</th>
+                                <th>Do</th>
+                                <th>Fr</th>
+                                <th>Sa</th>
+                                <th>So</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kalenderBody">
+                            <!-- wird von app.js generiert -->
+                        </tbody>
+                    </table>
+                </section>
             </div>
 
-            <div class="buttons-row">
-                <button class="btn btn-grey" id="zurueckBtn">Zurück</button>
-                <button class="btn btn-green" id="bezahlenBtn">Bezahlen</button>
+            <div class="buttons-row" id="buchen">
+                <button id="buchenBtn" class="btn btn-green" type="button">Buchen</button>
             </div>
         </section>
+
+        <!-- BUCHUNGS-BEREICH -->
+       <section class="buchen-box hidden" id="buchenBox">
+    <h2>Buchung</h2>
+    <p class="inhalt-text">Wähle deine Sitzplätze und trage für jeden Platz die passende Ermäßigung ein.</p>
+
+    <div class="buchung-rahmen">
+
+        <!-- SITZPLATZAUSWAHL -->
+        <div class="sitzplan-bereich">
+            <h3>Sitzplatzauswahl</h3>
+
+            <div class="sitzlegende">
+                <span class="legend standard"></span> Normal (Parkett)
+                <span class="legend premium"></span> Premium (Loge)
+                <span class="legend belegt"></span> Belegt
+            </div>
+
+            <div class="sitzplan">
+                <div class="leinwand">Leinwand</div>
+                <div class="sitzreihen" id="sitzContainer">
+                    <!-- Sitze werden per JS erzeugt -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PREISE + TICKETS -->
+        <div class="buchung-grid">
+
+            <!-- linke Spalte: Preisübersicht -->
+            <div class="buchung-col" id="preisSpalte">
+                <h3>Preis</h3>
+                <div class="preis-zeile">
+                    Erwachsene
+                    <span id="preisErwachsene">0,00 €</span>
+                </div>
+                <div class="preis-zeile">
+                    Studenten
+                    <span>-20 %</span>
+                </div>
+                <div class="preis-zeile">
+                    Senioren
+                    <span>-15 %</span>
+                </div>
+                <div class="preis-zeile">
+                    Kinder
+                    <span>-30 %</span>
+                </div>
+            </div>
+
+            <!-- rechte Spalte: Tickets nach Sitz -->
+            <div class="buchung-col">
+                <h3>Tickets</h3>
+
+                <table class="tickets-tabelle">
+                    <thead>
+                        <tr>
+                            <th>Platz</th>
+                            <th>Bereich</th>
+                            <th>Ermäßigung</th>
+                            <th>Preis</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ticketsTbody">
+                        <!-- wird per JS gefüllt -->
+                    </tbody>
+                </table>
+
+                <p class="auswahl-info">
+                    Ausgewählte Plätze:
+                    <span id="ausgewaehlteSitze">keine</span>
+                </p>
+            </div>
+
+            <!-- Summe über ganze Breite -->
+            <div class="summe-row">
+                <strong>Summe:</strong>
+                <span id="summeAnzeige">0,00 €</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="buttons-row">
+        <button class="btn btn-grey" id="zurueckBtn" type="button">Zurück</button>
+        <button class="btn btn-green" id="bezahlenBtn" type="button">Bezahlen</button>
+    </div>
+</section>
+
+
 
     </section>
 
