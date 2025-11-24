@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
    const inhaltText   = document.getElementById('inhaltText');
    const buchen       = document.getElementById('buchen');           // Container für den Buchen-Button
    const detailsWrapper = document.getElementById('detailsWrapper');
+ 
 
    // Wenn du testen willst, dass der Buchen-Bereich erscheint: hier true setzen
    let loginStatus = false;
@@ -170,4 +171,13 @@ document.addEventListener('DOMContentLoaded', () => {
    if (detailsWrapper) {
        detailsWrapper.classList.add('hidden');   // Detail-Elemente erst nach Klick
    }
+   
+   var btndelete = document.getElementByID("delete");
+
+    function delete(){
+  alert('Wollen sie dieses konto Wirklich löschen ?\n'+ 'Eine wiederherstllung ist nicht möglich');
+}
+   
 });
+
+
