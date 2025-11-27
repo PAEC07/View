@@ -2,52 +2,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // ----------------------------
     // GRUND-ELEMENTE
     // ----------------------------
-    const filme           = document.querySelectorAll('.liste li');
-    const inhaltBox       = document.getElementById('inhaltBox');
-    const buchenBox       = document.getElementById('buchenBox');
-    const inhaltTitel     = document.getElementById('inhaltTitel');
-    const inhaltText      = document.getElementById('inhaltText');
+    const filme = document.querySelectorAll('.liste li');
+    const inhaltBox = document.getElementById('inhaltBox');
+    const buchenBox = document.getElementById('buchenBox');
+    const inhaltTitel = document.getElementById('inhaltTitel');
+    const inhaltText = document.getElementById('inhaltText');
     const buchenContainer = document.getElementById('buchen');
-    const detailsWrapper  = document.getElementById('detailsWrapper');
+    const detailsWrapper = document.getElementById('detailsWrapper');
 
-    const infoFsk         = document.getElementById('infoFsk');
-    const infoFormat      = document.getElementById('infoFormat');
-    const infoKategorie   = document.getElementById('infoKategorie');
-    const infoPreis       = document.getElementById('infoPreis');
+    const infoFsk = document.getElementById('infoFsk');
+    const infoFormat = document.getElementById('infoFormat');
+    const infoKategorie = document.getElementById('infoKategorie');
+    const infoPreis = document.getElementById('infoPreis');
 
     const vorstellungenTbody = document.getElementById('vorstellungenTbody');
 
     // Toggle / Ansichten
-    const btnViewList      = document.getElementById('btnViewList');
-    const btnViewCalendar  = document.getElementById('btnViewCalendar');
-    const listenView       = document.getElementById('listenView');
-    const kalenderView     = document.getElementById('kalenderView');
+    const btnViewList = document.getElementById('btnViewList');
+    const btnViewCalendar = document.getElementById('btnViewCalendar');
+    const listenView = document.getElementById('listenView');
+    const kalenderView = document.getElementById('kalenderView');
 
     // Kalender
-    const kalMonatLabel    = document.getElementById('kalMonatLabel');
-    const kalPrev          = document.getElementById('kalPrev');
-    const kalNext          = document.getElementById('kalNext');
-    const kalenderBody     = document.getElementById('kalenderBody');
+    const kalMonatLabel = document.getElementById('kalMonatLabel');
+    const kalPrev = document.getElementById('kalPrev');
+    const kalNext = document.getElementById('kalNext');
+    const kalenderBody = document.getElementById('kalenderBody');
 
     // Buchung
-    const buchenBtn        = document.getElementById('buchenBtn');
-    const zurueckBtn       = document.getElementById('zurueckBtn');
-    const bezahlenBtn      = document.getElementById('bezahlenBtn');
+    const buchenBtn = document.getElementById('buchenBtn');
+    const zurueckBtn = document.getElementById('zurueckBtn');
+    const bezahlenBtn = document.getElementById('bezahlenBtn');
 
-    const preisErwachsene  = document.getElementById('preisErwachsene');
-    const summeAnzeige     = document.getElementById('summeAnzeige');
+    const preisErwachsene = document.getElementById('preisErwachsene');
+    const summeAnzeige = document.getElementById('summeAnzeige');
 
     // Sitzplatzauswahl
-    const sitzContainer        = document.getElementById('sitzContainer');
+    const sitzContainer = document.getElementById('sitzContainer');
     const ausgewaehlteSitzeTxt = document.getElementById('ausgewaehlteSitze');
-    const ticketsTbody         = document.getElementById('ticketsTbody');
+    const ticketsTbody = document.getElementById('ticketsTbody');
 
     // Für Demo: Nutzer ist eingeloggt
     let loginStatus = true;
 
     // Aktueller Film / Preis
     let aktuellerFilm = null;
-    let grundpreis    = 0;
+    let grundpreis = 0;
 
     // ----------------------------
     // VORSTELLUNGSDATEN (DEMO)
@@ -97,12 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
         eintraege.forEach(v => {
             const tr = document.createElement('tr');
             const tdDatum = document.createElement('td');
-            const tdZeit  = document.createElement('td');
-            const tdSaal  = document.createElement('td');
+            const tdZeit = document.createElement('td');
+            const tdSaal = document.createElement('td');
 
             tdDatum.textContent = v.datum;
-            tdZeit.textContent  = v.uhrzeit;
-            tdSaal.textContent  = v.saal;
+            tdZeit.textContent = v.uhrzeit;
+            tdSaal.textContent = v.saal;
 
             tr.appendChild(tdDatum);
             tr.appendChild(tdZeit);
@@ -115,12 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // KALENDER
     // ----------------------------
     let currentMonth = new Date().getMonth();
-    let currentYear  = new Date().getFullYear();
+    let currentYear = new Date().getFullYear();
 
     function getMonatsName(monthIndex) {
         const namen = [
-            "Januar","Februar","März","April","Mai","Juni",
-            "Juli","August","September","Oktober","November","Dezember"
+            "Januar", "Februar", "März", "April", "Mai", "Juni",
+            "Juli", "August", "September", "Oktober", "November", "Dezember"
         ];
         return namen[monthIndex] || "";
     }
@@ -132,9 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
         kalMonatLabel.textContent = `${getMonatsName(currentMonth)} ${currentYear}`;
 
         const firstDay = new Date(currentYear, currentMonth, 1);
-        const lastDay  = new Date(currentYear, currentMonth + 1, 0);
+        const lastDay = new Date(currentYear, currentMonth + 1, 0);
         const startWochentag = (firstDay.getDay() + 6) % 7;
-        const tageImMonat    = lastDay.getDate();
+        const tageImMonat = lastDay.getDate();
 
         const eintraege = vorstellungsDaten[filmTitel] || [];
         const mapDatumZuShows = {};
@@ -183,7 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (kalPrev) {
         kalPrev.addEventListener('click', () => {
             currentMonth--;
-            if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
             if (aktuellerFilm) baueKalender(aktuellerFilm);
         });
     }
@@ -191,7 +194,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (kalNext) {
         kalNext.addEventListener('click', () => {
             currentMonth++;
-            if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
             if (aktuellerFilm) baueKalender(aktuellerFilm);
         });
     }
@@ -233,8 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { reihe: 'A', anzahl: 10, seatType: 'standard', bereich: 'Parkett' },
         { reihe: 'B', anzahl: 10, seatType: 'standard', bereich: 'Parkett' },
         { reihe: 'C', anzahl: 10, seatType: 'standard', bereich: 'Parkett' },
-        { reihe: 'D', anzahl: 8,  seatType: 'premium',  bereich: 'Loge'    },
-        { reihe: 'E', anzahl: 8,  seatType: 'premium',  bereich: 'Loge'    }
+        { reihe: 'D', anzahl: 8, seatType: 'premium', bereich: 'Loge' },
+        { reihe: 'E', anzahl: 8, seatType: 'premium', bereich: 'Loge' }
     ];
 
     let ausgewaehlteSitze = []; // { id, seatType, bereich, personType }
@@ -267,12 +273,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ausgewaehlteSitze.forEach((sitz, index) => {
             const tr = document.createElement('tr');
 
-            const tdPlatz   = document.createElement('td');
+            const tdPlatz = document.createElement('td');
             const tdBereich = document.createElement('td');
-            const tdType    = document.createElement('td');
-            const tdPreis   = document.createElement('td');
+            const tdType = document.createElement('td');
+            const tdPreis = document.createElement('td');
 
-            tdPlatz.textContent   = sitz.id;
+            tdPlatz.textContent = sitz.id;
             tdBereich.textContent = sitz.bereich;
 
             const select = document.createElement('select');
@@ -307,13 +313,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switch (sitz.personType) {
             case 'student':
-                faktor = 0.8;   // -20%
+                faktor = 0.8; // -20%
                 break;
             case 'senior':
-                faktor = 0.85;  // -15%
+                faktor = 0.85; // -15%
                 break;
             case 'kind':
-                faktor = 0.7;   // -30%
+                faktor = 0.7; // -30%
                 break;
             default:
                 faktor = 1;
@@ -329,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function toggleSitz(seatEl) {
-        const id      = seatEl.dataset.id;
+        const id = seatEl.dataset.id;
         const seatTyp = seatEl.dataset.seatType;
         const bereich = seatEl.dataset.bereich;
 
@@ -371,10 +377,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 seat.type = 'button';
                 seat.classList.add('sitz', reiheInfo.seatType);
                 const id = `${reiheInfo.reihe}${i}`;
-                seat.dataset.id      = id;
+                seat.dataset.id = id;
                 seat.dataset.seatType = reiheInfo.seatType;
                 seat.dataset.bereich = reiheInfo.bereich;
-                seat.textContent     = i;
+                seat.textContent = i;
 
                 if (Math.random() < 0.07) {
                     seat.classList.add('belegt');
@@ -420,22 +426,22 @@ document.addEventListener('DOMContentLoaded', () => {
             filme.forEach(f => f.classList.remove('aktiv'));
             li.classList.add('aktiv');
 
-            const titel   = li.dataset.titel || li.textContent.trim();
-            const beschr  = li.dataset.beschreibung || '';
-            const fsk     = li.dataset.fsk || '';
-            const format  = li.dataset.format || '';
-            const kat     = li.dataset.kategorie || '';
-            const preis   = parseFloat(li.dataset.preis || '0');
+            const titel = li.dataset.titel || li.textContent.trim();
+            const beschr = li.dataset.beschreibung || '';
+            const fsk = li.dataset.fsk || '';
+            const format = li.dataset.format || '';
+            const kat = li.dataset.kategorie || '';
+            const preis = parseFloat(li.dataset.preis || '0');
 
-            aktuellerFilm    = titel;
-            grundpreis       = preis || 0;
+            aktuellerFilm = titel;
+            grundpreis = preis || 0;
 
             if (inhaltTitel) inhaltTitel.textContent = titel;
-            if (inhaltText)  inhaltText.textContent  = beschr;
-            if (infoFsk)     infoFsk.textContent     = fsk;
-            if (infoFormat)  infoFormat.textContent  = format;
+            if (inhaltText) inhaltText.textContent = beschr;
+            if (infoFsk) infoFsk.textContent = fsk;
+            if (infoFormat) infoFormat.textContent = format;
             if (infoKategorie) infoKategorie.textContent = kat;
-            if (infoPreis)   infoPreis.textContent   = formatEuro(grundpreis);
+            if (infoPreis) infoPreis.textContent = formatEuro(grundpreis);
 
             if (detailsWrapper) {
                 detailsWrapper.classList.remove('hidden');
@@ -477,9 +483,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bezahlenBtn) {
         bezahlenBtn.addEventListener('click', () => {
             const summe = summeAnzeige ? summeAnzeige.textContent : "0,00 €";
-            const sitzText = ausgewaehlteSitze.length
-                ? ausgewaehlteSitze.map(s => `${s.id} (${s.personType || 'Erwachsene/r'})`).join(', ')
-                : 'keine Sitzplätze ausgewählt';
+            const sitzText = ausgewaehlteSitze.length ?
+                ausgewaehlteSitze.map(s => `${s.id} (${s.personType || 'Erwachsene/r'})`).join(', ') :
+                'keine Sitzplätze ausgewählt';
 
             alert(
                 'Buchung übernommen.\n' +

@@ -6,7 +6,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
@@ -14,6 +15,7 @@ html, body {
     overflow-x: hidden;
     background-color: #f5f5f5;
 }
+
 
 /* =============================
    TOPBAR
@@ -58,8 +60,9 @@ html, body {
     object-fit: contain;
     background: #ffffff;
     padding: 6px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
+
 
 /* =============================
    PAGE LAYOUT
@@ -84,6 +87,7 @@ html, body {
     flex-direction: column;
 }
 
+
 /* =============================
    TICKETS PANEL (LEFT SIDE)
 ============================= */
@@ -93,7 +97,7 @@ html, body {
     border-radius: 8px;
     border-left: 5px solid #c0392b;
     padding: 20px;
-    box-shadow: 0 0 6px rgba(0,0,0,0.12);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
     flex: 1;
 }
 
@@ -118,7 +122,9 @@ html, body {
     padding: 12px;
 }
 
+
 /* Zeile im Ticket – links Infos, rechts Button */
+
 .ticket-row {
     display: flex;
     justify-content: space-between;
@@ -126,7 +132,9 @@ html, body {
     gap: 16px;
 }
 
+
 /* Infos links gestapelt */
+
 .ticket-info {
     display: flex;
     flex-direction: column;
@@ -146,8 +154,11 @@ html, body {
     flex-wrap: wrap;
 }
 
+
 /* Stornieren-Button im Ticket */
+
 .ticket-cancel-btn {
+    justify-content: right;
     padding: 6px 16px;
     border: none;
     border-radius: 12px;
@@ -158,9 +169,25 @@ html, body {
     transition: 0.2s ease;
 }
 
+.ticket-info-btn {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 12px;
+    background: #462bc0;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
 .ticket-cancel-btn:hover {
     filter: brightness(90%);
 }
+
+.ticket-info-btn:hover {
+    filter: brightness(90%);
+}
+
 
 /* =============================
    ACCOUNT DETAILS (RIGHT SIDE)
@@ -171,7 +198,7 @@ html, body {
     padding: 25px;
     border-radius: 8px;
     border-left: 5px solid #452abb;
-    box-shadow: 0 0 6px rgba(0,0,0,0.12);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -189,6 +216,7 @@ html, body {
     flex: 1;
 }
 
+
 /* Info-Felder rechts */
 
 .acc-info-details-field {
@@ -202,6 +230,7 @@ html, body {
     margin: 0;
     font-size: 18px;
 }
+
 
 /* =============================
    BUTTON: ÄNDERN (rechts & im Modal)
@@ -228,6 +257,7 @@ html, body {
     cursor: not-allowed;
 }
 
+
 /* =============================
    MODAL OVERLAY
 ============================= */
@@ -236,7 +266,8 @@ html, body {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
-    display: none;                  /* wird per JS sichtbar gemacht */
+    display: none;
+    /* wird per JS sichtbar gemacht */
     align-items: center;
     justify-content: center;
     z-index: 2000;
@@ -252,11 +283,13 @@ html, body {
     border-radius: 8px;
     min-width: 320px;
     max-width: 520px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     position: relative;
 }
 
+
 /* X-Button oben rechts im Modal */
+
 .modal-close {
     position: absolute;
     top: 8px;
@@ -266,6 +299,7 @@ html, body {
     font-size: 24px;
     cursor: pointer;
 }
+
 
 /* Inhalt im Modal */
 
@@ -285,6 +319,7 @@ html, body {
     margin-top: 4px;
 }
 
+
 /* Speichern-Button innen etwas kleiner, aber gleiche Klasse */
 
 #Save {
@@ -294,3 +329,6 @@ html, body {
     padding-inline: 24px;
 }
 
+.hidden {
+    display: none;
+}
