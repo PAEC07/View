@@ -696,3 +696,27 @@ body {
     border: 1px solid #ccc;
     background: #fafafa;
 }
+
+.filter-field-btn {
+    margin-top: 22px;
+    padding: 0px 5px;
+}
+.search{
+    margin-right: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    border: 1px solid #bbb;
+    padding: 10px;
+    font-size: 18px;
+
+}
+.btn-add{
+    padding: 10px 22px;
+    border-radius: 6px;
+    border: none;
+    background: #3cb371;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}

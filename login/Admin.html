@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kino – Filmübersicht</title>
+    <title>Kino – Adminbereich</title>
     <link rel="stylesheet" href="css/adm.css">
 </head>
 
 <body>
+    <!-- TOPBAR -->
     <header class="topbar">
         <div class="topbar-right">
             <strong>Admin-Bereich</strong>
@@ -18,20 +19,163 @@
         </div>
     </header>
 
+    <!-- HAUPTBEREICH -->
     <main class="page">
-        <!-- LINKE SPALTE: Tickets -->
 
+        <!-- LINKE SPALTE: FILME -->
+        <section class="column left-column">
+            
+            <h2>Filme</h2>
 
+            <section class="filter">
+            <h3 class="filter-title">Filtern nach</h3>
+
+            <div class="filter-row">
+                <div class="filter-field">
+                    <label>Format</label>
+                    <select>
+                        <option value="">Alle</option>
+                        <option value="2d">2D</option>
+                        <option value="3d">3D</option>
+                    </select>
+                </div>
+
+                <div class="filter-field">
+                    <label>FSK</label>
+                    <select>
+                        <option value="">Alle</option>
+                        <option>6</option>
+                        <option>12</option>
+                        <option>16</option>
+                        <option>18</option>
+                    </select>
+                </div>
+
+                
+
+                <div class="filter-field">
+                    <label>Stil</label>
+                    <select>
+                        <option value="">Alle</option>
+                        <option>Horror</option>
+                        <option>Komödie</option>
+                    </select>
+                </div>
+                
+                
+                
+                <div class="filter-field-btn">
+                    <button class="btn btn-green" type="button">Anwenden</button>
+                </div>
+                
+            <div class = "filter-search">
+                <input class="search" type="text" id="filmSuche" placeholder="Film suchen...">
+                <button class="btn btn-green" type="button" id="suchBtn">Suchen</button>
+                
+                <button class="btn-add" type="button" id="suchBtn">FIlm hinzufügem</button>
+                         
+                     
+                    </section>
+                </div>
+                <br>
+                <aside class="liste">
+                <ul class="movie-list">
+                    <!-- Beispiel-Film -->
+                    <li class="movie-item"
+                        data-movie-id="1"
+                        data-titel="Kampf der Titanen"
+                        data-beschreibung="Spannender Actionfilm."
+                        data-fsk="16"
+                        data-format="3D"
+                        data-kategorie="Action"
+                        data-preis="12.99">
+                        <div class="movie-row">
+                            <div class="movie-info">
+                                <div class="movie-title">Kampf der Titanen</div>
+                                <div class="movie-meta">
+                                    <span>FSK: <span class="movie-fsk">16</span></span>
+                                    <span>Format: <span class="movie-format">3D</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Weitere Filme kannst du genauso ergänzen -->
+                    <!--
+                    <li class="movie-item" data-movie-id="2" data-titel="…" ...>…</li>
+                    -->
+                </ul>
+            </aside>
+        </section>
+
+        <!-- RECHTE SPALTE: VORSTELLUNGEN & KALENDER -->
+        <section class="column right-column">
+            <h2>Vorstellungen</h2>
+
+            <div class="film-vorstellung-btns">
+                <button class="add-session-btn" type="button">Vorstellung hinzufügen</button>
+          </div>
+                <!-- Toggle Vorstellungen / Kalender -->
+                <div class="view-toggle">
+                    <button id="btnViewList" class="btn-small active-view" type="button">
+                        Vorstellungen
+                    </button>
+                    <button id="btnViewCalendar" class="btn-small" type="button">
+                        Kalender
+                    </button>
+                </div>
+            </div>
+
+            <!-- LISTENANSICHT DER VORSTELLUNGEN -->
+            <div class="details-table-wrapper" id="listenView">
+                <table class="details-table">
+                    <thead>
+                        <tr>
+                            <th>Datum</th>
+                            <th>Film</th>
+                            <th>Uhrzeit</th>
+                            <th>Saal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vorstellungenTbody">
+                        <!-- Per JS/Backend gefüllt -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- KALENDER-ANSICHT DER VORSTELLUNGEN -->
+            <section id="kalenderView" class="kalender-view hidden">
+                <h3>Kalenderansicht</h3>
+
+                <div class="kalender-header">
+                    <button id="kalPrev" class="btn-grey" type="button">&lt;</button>
+                    <span id="kalMonatLabel"></span>
+                    <button id="kalNext" class="btn-grey" type="button">&gt;</button>
+                </div>
+
+                <table class="kalender-tabelle">
+                    <thead>
+                        <tr>
+                            <th>Mo</th>
+                            <th>Di</th>
+                            <th>Mi</th>
+                            <th>Do</th>
+                            <th>Fr</th>
+                            <th>Sa</th>
+                            <th>So</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kalenderBody">
+                        <!-- wird von adm.js generiert -->
+                    </tbody>
+                </table>
+            </section>
 
         </section>
 
-        </ul>
-        </aside>
-        </section>
     </main>
 
-
-    <script src="js/acc.js" defer></script>
+    <script src="js/adm.js" defer></script>
 </body>
 
 </html>
