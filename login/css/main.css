@@ -720,3 +720,11 @@ body {
     font-weight: 600;
     cursor: pointer;
 }
+/* ausgewählte Vorstellung in der Tabelle hervorheben */
+.details-table tr.selected-show {
+    background: #e6ffe6;
+}
+.buchung-vorstellung-info {
+    font-weight: 600;
+    margin-bottom: 10px;
+}

@@ -42,12 +42,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const ausgewaehlteSitzeTxt = document.getElementById('ausgewaehlteSitze');
     const ticketsTbody = document.getElementById('ticketsTbody');
 
+    // Filter & Suche
+    const filterFormat = document.getElementById('filterFormat');
+    const filterFsk = document.getElementById('filterFsk');
+    const filterBereich = document.getElementById('filterBereich');
+    const filterStil = document.getElementById('filterStil');
+    const filterDatum = document.getElementById('FilterDatum');
+    const btnFilterApply = document.getElementById('btnFilterApply');
+    const suchInput = document.getElementById('filmSuche');
+    const suchBtn = document.getElementById('suchBtn');
+
+    // Info im Buchungsfenster zur gewählten Vorstellung
+    const buchungVorstellungInfo = document.getElementById('buchungVorstellungInfo');
+
     // Für Demo: Nutzer ist eingeloggt
     let loginStatus = true;
 
     // Aktueller Film / Preis
     let aktuellerFilm = null;
     let grundpreis = 0;
+
+    // Ausgewählte Vorstellung (muss gewählt werden, bevor gebucht wird)
+    let ausgewaehlteVorstellung = null;
 
     // ----------------------------
     // VORSTELLUNGSDATEN (DEMO)
@@ -77,11 +93,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----------------------------
+    // VORSTELLUNG AUSWÄHLEN
+    // ----------------------------
+    function selectVorstellung(filmTitel, v, trElement) {
+        // alle anderen Markierungen entfernen
+        const alleZeilen = vorstellungenTbody.querySelectorAll('tr');
+        alleZeilen.forEach(row => row.classList.remove('selected-show'));
+
+        // diese Zeile markieren
+        trElement.classList.add('selected-show');
+
+        // Daten merken
+        ausgewaehlteVorstellung = {
+            film: filmTitel,
+            datum: v.datum,
+            uhrzeit: v.uhrzeit,
+            saal: v.saal
+        };
+
+        // Buchungsinfo-Text vorab updaten (für später)
+        if (buchungVorstellungInfo) {
+            buchungVorstellungInfo.textContent =
+                `Ausgewählte Vorstellung: ${ausgewaehlteVorstellung.film} – ` +
+                `${ausgewaehlteVorstellung.datum}, ` +
+                `${ausgewaehlteVorstellung.uhrzeit} Uhr, ` +
+                `${ausgewaehlteVorstellung.saal}`;
+        }
+
+        // Buchen-Button aktivieren (wenn Film & Login passen)
+        if (buchenContainer && buchenBtn && loginStatus) {
+            buchenContainer.classList.remove('hidden');
+            buchenBtn.disabled = false;
+        }
+    }
+
+    // ----------------------------
     // VORSTELLUNGSLISTE
     // ----------------------------
     function fuelleVorstellungenListe(filmTitel) {
         if (!vorstellungenTbody) return;
         vorstellungenTbody.innerHTML = '';
+        ausgewaehlteVorstellung = null; // neue Filmauswahl -> alte Vorstellung reset
 
         const eintraege = vorstellungsDaten[filmTitel] || [];
         if (!eintraege.length) {
@@ -107,6 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.appendChild(tdDatum);
             tr.appendChild(tdZeit);
             tr.appendChild(tdSaal);
+
+            // Vorstellung auswählbar machen
+            tr.addEventListener('click', () => selectVorstellung(filmTitel, v, tr));
+
             vorstellungenTbody.appendChild(tr);
         });
     }
@@ -234,7 +290,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ----------------------------
     // SITZPLÄTZE & TICKETS
     // ----------------------------
-
     const SITZPLAN_KONFIG = [
         { reihe: 'A', anzahl: 10, seatType: 'standard', bereich: 'Parkett' },
         { reihe: 'B', anzahl: 10, seatType: 'standard', bereich: 'Parkett' },
@@ -256,6 +311,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function berechnePreisFuerTicket(sitz) {
+        if (!grundpreis) return 0;
+        let faktor = 1;
+
+        switch (sitz.personType) {
+            case 'student':
+                faktor = 0.8;
+                break;
+            case 'senior':
+                faktor = 0.85;
+                break;
+            case 'kind':
+                faktor = 0.7;
+                break;
+            default:
+                faktor = 1;
+        }
+
+        if (sitz.seatType === 'premium') {
+            return grundpreis * faktor + 2;
+        }
+
+        return grundpreis * faktor;
+    }
+
     function baueTicketsTabelle() {
         if (!ticketsTbody) return;
         ticketsTbody.innerHTML = '';
@@ -270,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        ausgewaehlteSitze.forEach((sitz, index) => {
+        ausgewaehlteSitze.forEach((sitz) => {
             const tr = document.createElement('tr');
 
             const tdPlatz = document.createElement('td');
@@ -292,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
             select.addEventListener('change', () => {
                 sitz.personType = select.value;
                 berechneSumme();
-                baueTicketsTabelle(); // Preise aktualisieren
+                baueTicketsTabelle();
             });
 
             tdType.appendChild(select);
@@ -305,33 +385,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             ticketsTbody.appendChild(tr);
         });
-    }
-
-    function berechnePreisFuerTicket(sitz) {
-        if (!grundpreis) return 0;
-        let faktor = 1;
-
-        switch (sitz.personType) {
-            case 'student':
-                faktor = 0.8; // -20%
-                break;
-            case 'senior':
-                faktor = 0.85; // -15%
-                break;
-            case 'kind':
-                faktor = 0.7; // -30%
-                break;
-            default:
-                faktor = 1;
-        }
-
-        // optional: Premium-Zuschlag
-        if (sitz.seatType === 'premium') {
-            // +2 € Aufschlag
-            return grundpreis * faktor + 2;
-        }
-
-        return grundpreis * faktor;
     }
 
     function toggleSitz(seatEl) {
@@ -456,18 +509,90 @@ document.addEventListener('DOMContentLoaded', () => {
             baueSitzplan();
             berechneSumme();
 
-            if (buchenContainer && loginStatus && buchenBtn) {
-                buchenContainer.classList.remove('hidden');
-                buchenBtn.disabled = false;
+            // Buchungsbutton erst wieder deaktivieren,
+            // bis eine Vorstellung ausgewählt wurde
+            if (buchenContainer && buchenBtn) {
+                buchenContainer.classList.remove('hidden'); // sichtbar lassen
+                buchenBtn.disabled = true;
             }
         });
     });
+
+    // ----------------------------
+    // SUCHE & FILTER AUF FILMLISTE
+    // ----------------------------
+    function filmHasVorstellungForDate(titel, datumStr) {
+        const eintraege = vorstellungsDaten[titel] || [];
+        return eintraege.some(v => v.datum === datumStr);
+    }
+
+    function filterAndSearchFilms() {
+        const wantFormat = (filterFormat?.value || '').toUpperCase();
+        const wantFsk = filterFsk?.value || '';
+        const wantBereich = filterBereich?.value || '';
+        const wantStil = filterStil?.value || '';
+        const wantDate = filterDatum?.value || '';
+        const searchText = (suchInput?.value || '').trim().toLowerCase();
+
+        filme.forEach(li => {
+            const titelRaw = li.dataset.titel || li.textContent.trim() || '';
+            const titel = titelRaw.toLowerCase();
+            const format = (li.dataset.format || '').toUpperCase();
+            const fsk = li.dataset.fsk || '';
+            const bereich = li.dataset.bereich || '';
+            const stil = li.dataset.kategorie || '';
+
+            let visible = true;
+
+            if (wantFormat && format !== wantFormat) visible = false;
+            if (wantFsk && fsk !== wantFsk) visible = false;
+            if (wantBereich && bereich !== wantBereich) visible = false;
+            if (wantStil && stil !== wantStil) visible = false;
+
+            if (wantDate && !filmHasVorstellungForDate(titelRaw, wantDate)) {
+                visible = false;
+            }
+
+            if (searchText && !titel.includes(searchText)) visible = false;
+
+            li.style.display = visible ? '' : 'none';
+        });
+    }
+
+    if (btnFilterApply) {
+        btnFilterApply.addEventListener('click', filterAndSearchFilms);
+    }
+    if (suchBtn) {
+        suchBtn.addEventListener('click', filterAndSearchFilms);
+    }
+    if (suchInput) {
+        suchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                filterAndSearchFilms();
+            }
+        });
+    }
 
     // ----------------------------
     // BUCHEN / ZURÜCK / BEZAHLEN
     // ----------------------------
     if (buchenBtn && buchenBox && inhaltBox) {
         buchenBtn.addEventListener('click', () => {
+            // Sicherheitscheck: Vorstellung muss ausgewählt sein
+            if (!ausgewaehlteVorstellung) {
+                alert('Bitte zuerst eine Vorstellung auswählen.');
+                return;
+            }
+
+            // Info im Buchungsfenster sicher aktualisieren
+            if (buchungVorstellungInfo && ausgewaehlteVorstellung) {
+                buchungVorstellungInfo.textContent =
+                    `Ausgewählte Vorstellung: ${ausgewaehlteVorstellung.film} – ` +
+                    `${ausgewaehlteVorstellung.datum}, ` +
+                    `${ausgewaehlteVorstellung.uhrzeit} Uhr, ` +
+                    `${ausgewaehlteVorstellung.saal}`;
+            }
+
             inhaltBox.classList.add('hidden');
             buchenBox.classList.remove('hidden');
         });
@@ -487,8 +612,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 ausgewaehlteSitze.map(s => `${s.id} (${s.personType || 'Erwachsene/r'})`).join(', ') :
                 'keine Sitzplätze ausgewählt';
 
+            const vorstellungText = ausgewaehlteVorstellung
+                ? `${ausgewaehlteVorstellung.film} – ${ausgewaehlteVorstellung.datum}, ${ausgewaehlteVorstellung.uhrzeit} Uhr, ${ausgewaehlteVorstellung.saal}`
+                : 'keine Vorstellung gewählt';
+
             alert(
                 'Buchung übernommen.\n' +
+                'Vorstellung: ' + vorstellungText + '\n' +
                 'Summe: ' + summe + '\n' +
                 'Plätze: ' + sitzText
             );
@@ -510,3 +640,4 @@ document.addEventListener('DOMContentLoaded', () => {
     baueSitzplan();
     berechneSumme();
 });
+q

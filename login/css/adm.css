@@ -96,7 +96,6 @@ body {
     border: none;
     background: none;
     text-align: center;
-    
     font-size: 16px;
     cursor: pointer;
 }
@@ -110,7 +109,6 @@ body {
     border-left: 5px solid #842bc0;
     padding: 20px;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
-    flex: 1;
 }
 
 .liste h2 {
@@ -133,16 +131,6 @@ body {
     padding: 12px;
 }
 
-.logo-round {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: contain;
-    background: #ffffff;
-    padding: 6px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-}
-
 .left-column {
     flex: 1;
     display: flex;
@@ -161,6 +149,7 @@ body {
     gap: 12px;
     overflow-y: auto;
 }
+
 .add-movie-btn {
     padding: 12px;
     border: none;
@@ -182,11 +171,45 @@ body {
     cursor: pointer;
     align-self: flex-end;
 }
+
 .film-vorstellung-btns{
     display: flex;
     gap: 10px;
 }
-    
+
+/* einfache Film-Layout-Klassen */
+.movie-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.movie-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.movie-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.movie-price {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* =============================
+   KALENDER
+============================= */
+
 .kalender-view {
     border: 2px solid #842bc0;
     border-radius: 6px;
@@ -299,6 +322,11 @@ body {
 .kal-event:hover {
     background: #d4f8d4;
 }
+
+/* =============================
+   VORSTELLUNGSLISTE
+============================= */
+
 .details-table-wrapper {
    border: 2px solid #842bc0;
    border-radius: 6px;
@@ -328,7 +356,7 @@ body {
 
 /* =======================
    TOGGLE FÜR ANSICHT
-   ======================= */
+======================= */
 
 .view-toggle {
     display: flex;
@@ -356,6 +384,7 @@ body {
     background: #842bc0 !important;
     color: #ffffff !important;
 }
+
 .details-row {
    display: flex;
    gap: 20px;
@@ -375,6 +404,9 @@ body {
    font-size: 20px;
    line-height: 1.7;
 }
+
+/* Allgemeine Buttons */
+
 .btn {
     padding: 12px 20px;
     border: none;
@@ -391,28 +423,30 @@ body {
 .btn-grey {
     background: #777777;
 }
+
 .buttons-row {
     margin-top: auto;
     padding-top: 20px;
     display: flex;
     gap: 20px;
 }
+
 .hidden {
     display: none;
 }
 
+/* FILTER & SUCHE */
 
 .filter-field-btn {
     margin-top: 15px;
     padding: 0px 5px;
 }
+
 .search{
-    
     border-radius: 15px;
     border: 1px solid #bbb;
     padding: 10px;
     font-size: 18px;
-
 }
 
 .search-btn {
@@ -425,13 +459,14 @@ body {
     font-weight: 600;
     cursor: pointer;
 }
+
 .filter {
     background: #ffffff;
     padding: 20px;
     border-radius: 8px;
     border-left: 5px solid #bbb;
     box-shadow: 0 0 6px rgba(0,0,0,0.12);
-    width: 100% 20px;
+    width: 100%;
 }
 
 .filter-title {
@@ -459,13 +494,12 @@ body {
 }
 
 .filter-search {
-    
     display: flex;
-    
     gap: 10px;
-        height: auto;
-        width: auto ;
+    height: auto;
+    width: auto;
 }
+
 .btn-add{
     display: flex;
     padding: 10px 22px;
@@ -476,4 +510,106 @@ body {
     font-size: 18px;
     white-space: normal;
     cursor: pointer;
+}
+
+/* =============================
+   MODAL / OVERLAY
+============================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 320px;
+    max-width: 500px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.25);
+    position: relative;
+}
+
+.modal-left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-close {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    cursor: pointer;
+}
+/* ausgewählter Film in der Liste */
+.movie-item.selected {
+    background: #f5e9ff;
+    border-color: #842bc0;
+}
+
+/* Delete-Button in Listen und Tabellen */
+.delete-btn {
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: none;
+    background: #cc3333;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    filter: brightness(0.9);
+}
+
+/* Vorstellungen-Tabelle: ausgewählte Zeile (für spätere Features, falls gewünscht) */
+.details-table tr.highlight {
+    background: #f9f2ff;
+}
+
+/* Filmzeilen im Admin */
+.movie-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-title {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.movie-meta {
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    gap: 10px;
 }

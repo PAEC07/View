@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // DOM-Referenzen
+    const movieListEl = document.getElementById('movieList');
     const vorstellungenTbody = document.getElementById('vorstellungenTbody');
 
     const listenView = document.getElementById('listenView');
     const kalenderView = document.getElementById('kalenderView');
-
     const btnViewList = document.getElementById('btnViewList');
     const btnViewCalendar = document.getElementById('btnViewCalendar');
 
@@ -13,88 +13,304 @@ document.addEventListener('DOMContentLoaded', () => {
     const kalPrev = document.getElementById('kalPrev');
     const kalNext = document.getElementById('kalNext');
 
-    const movieItems = document.querySelectorAll('.movie-list .movie-item');
+    // Filter / Suche
+    const filterFormat = document.getElementById('filterFormat');
+    const filterFsk = document.getElementById('filterFsk');
+    const filterStil = document.getElementById('filterStil');
+    const btnFilterApply = document.getElementById('btnFilterApply');
+    const filmSuche = document.getElementById('filmSuche');
+    const suchBtn = document.getElementById('suchBtn');
 
-    //FFilm hinzufügen
-    const listTitel = document.getElementById("listTitel");
-    const listBeschreibung = document.getElementById("listBeschreibung");
-    const listFsk = document.getElementById("listFsk");
-    const listKategorie = document.getElementById("listKategorie");
-    const listPreis = document.getElementById("listPreis");
+    // Modals
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalFilm = document.getElementById('modalFilm');
+    const modalVorstellung = document.getElementById('modalVorstellung');
 
-    const modelTitel = document.getElementById("modelTitel");
-    const modelBeschreibung = document.getElemntById("mdoelBeschreibung");
-    const modelFsk = document.getElemntById("modelFsk");
-    const modelKategorie = document.getElemntById("modelKategorie");
-    const modelPreis = document.getElemntById("modelPreis");
+    const btnOpenFilmModal = document.getElementById('btnOpenFilmModal');
+    const btnOpenVorstellungModal = document.getElementById('btnOpenVorstellungModal');
+    const closeFilmModal = document.getElementById('closeFilmModal');
+    const closeVorstellungModal = document.getElementById('closeVorstellungModal');
 
+    // Film-Form
+    const filmTitelInput = document.getElementById('filmTitelInput');
+    const filmBeschreibungInput = document.getElementById('filmBeschreibungInput');
+    const filmFskInput = document.getElementById('filmFskInput');
+    const filmFormatInput = document.getElementById('filmFormatInput');
+    const filmKategorieInput = document.getElementById('filmKategorieInput');
+    const filmPreisInput = document.getElementById('filmPreisInput');
+    const filmSaveBtn = document.getElementById('filmSaveBtn');
 
-    // aktuell ausgewählter Film
-    let aktuellerFilm = null;
+    // Vorstellung-Form
+    const vorstellungFilmSelect = document.getElementById('vorstellungFilmSelect');
+    const vorstellungDatumInput = document.getElementById('vorstellungDatumInput');
+    const vorstellungZeitInput = document.getElementById('vorstellungZeitInput');
+    const vorstellungSaalInput = document.getElementById('vorstellungSaalInput');
+    const vorstellungSaveBtn = document.getElementById('vorstellungSaveBtn');
 
-    // Beispiel-Struktur für Vorstellungsdaten
-    // Du kannst das später aus deinem Backend füllen
-    const vorstellungsDaten = {
-        "Kampf der Titanen": [
-            { datum: "2025-11-27", titel: "Kampf der Titanen", uhrzeit: "20:00", saal: "Saal 1" },
-            { datum: "2025-11-28", titel: "Kampf der Titanen", uhrzeit: "18:30", saal: "Saal 2" }
-        ]
+    // Daten (Demo)
+    let nextMovieId = 4;
+    let nextShowId = 7;
 
-    };
+    let movies = [
+        {
+            id: 1,
+            titel: 'Film 1',
+            beschreibung: 'Spannender Actionfilm.',
+            fsk: '16',
+            format: '3D',
+            kategorie: 'Action',
+            preis: 12.99
+        },
+        {
+            id: 2,
+            titel: 'Film 2',
+            beschreibung: 'Romantische Komödie.',
+            fsk: '12',
+            format: '2D',
+            kategorie: 'Komödie',
+            preis: 9.99
+        },
+        {
+            id: 3,
+            titel: 'Film 3',
+            beschreibung: 'Science-Fiction Abenteuer.',
+            fsk: '6',
+            format: '3D',
+            kategorie: 'Sci-Fi',
+            preis: 14.5
+        }
+    ];
 
-    // ----------------------------
-    // LISTENANSICHT FÜLLEN
-    // ----------------------------
-    function fuelleVorstellungenListe(filmTitel) {
+    let shows = [
+        { id: 1, filmId: 1, datum: '2025-11-25', uhrzeit: '18:00', saal: 'Saal 1' },
+        { id: 2, filmId: 1, datum: '2025-11-25', uhrzeit: '20:30', saal: 'Saal 1' },
+        { id: 3, filmId: 1, datum: '2025-11-26', uhrzeit: '17:45', saal: 'Saal 2' },
+        { id: 4, filmId: 2, datum: '2025-11-25', uhrzeit: '19:15', saal: 'Saal 3' },
+        { id: 5, filmId: 2, datum: '2025-11-26', uhrzeit: '21:00', saal: 'Saal 3' },
+        { id: 6, filmId: 3, datum: '2025-11-26', uhrzeit: '16:00', saal: 'Saal 2' }
+    ];
+
+    let currentMovieId = null;
+
+    // ============================
+    // Helper
+    // ============================
+    function openModal(which) {
+        modalOverlay.classList.remove('hidden');
+        modalFilm.classList.add('hidden');
+        modalVorstellung.classList.add('hidden');
+
+        if (which === 'film') {
+            modalFilm.classList.remove('hidden');
+        } else if (which === 'show') {
+            modalVorstellung.classList.remove('hidden');
+        }
+    }
+
+    function closeModal() {
+        modalOverlay.classList.add('hidden');
+        modalFilm.classList.add('hidden');
+        modalVorstellung.classList.add('hidden');
+    }
+
+    function getMovieById(id) {
+        return movies.find(m => m.id === id) || null;
+    }
+
+    function formatEuro(wert) {
+        const n = isNaN(wert) ? 0 : Number(wert);
+        return n.toFixed(2).replace('.', ',') + ' €';
+    }
+
+    // ============================
+    // Filme rendern / filtern
+    // ============================
+    function renderMovieList() {
+        if (!movieListEl) return;
+        movieListEl.innerHTML = '';
+
+        const searchText = (filmSuche?.value || '').toLowerCase().trim();
+        const wantFormat = (filterFormat?.value || '').toUpperCase();
+        const wantFsk = filterFsk?.value || '';
+        const wantStil = (filterStil?.value || '').toLowerCase();
+
+        movies.forEach(movie => {
+            let visible = true;
+
+            if (wantFormat && movie.format.toUpperCase() !== wantFormat) visible = false;
+            if (wantFsk && movie.fsk !== wantFsk) visible = false;
+            if (wantStil && movie.kategorie.toLowerCase() !== wantStil) visible = false;
+            if (searchText && !movie.titel.toLowerCase().includes(searchText)) visible = false;
+
+            if (!visible) return;
+
+            const li = document.createElement('li');
+            li.classList.add('movie-item');
+            li.dataset.movieId = String(movie.id);
+
+            if (movie.id === currentMovieId) {
+                li.classList.add('selected');
+            }
+
+            const row = document.createElement('div');
+            row.classList.add('movie-row');
+
+            const infoDiv = document.createElement('div');
+            infoDiv.classList.add('movie-info');
+
+            const titleDiv = document.createElement('div');
+            titleDiv.classList.add('movie-title');
+            titleDiv.textContent = movie.titel;
+
+            const metaDiv = document.createElement('div');
+            metaDiv.classList.add('movie-meta');
+            metaDiv.innerHTML =
+                `FSK: ${movie.fsk} • Format: ${movie.format} • Kategorie: ${movie.kategorie} • ${formatEuro(movie.preis)}`;
+
+            infoDiv.appendChild(titleDiv);
+            infoDiv.appendChild(metaDiv);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.type = 'button';
+            deleteBtn.classList.add('delete-btn');
+            deleteBtn.textContent = 'Löschen';
+
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                deleteMovie(movie.id);
+            });
+
+            row.appendChild(infoDiv);
+            row.appendChild(deleteBtn);
+
+            li.appendChild(row);
+
+            li.addEventListener('click', () => {
+                selectMovie(movie.id);
+            });
+
+            movieListEl.appendChild(li);
+        });
+    }
+
+    function selectMovie(movieId) {
+        currentMovieId = movieId;
+        renderMovieList();
+        renderShowList();
+        renderCalendar();
+    }
+
+    function deleteMovie(movieId) {
+        const movie = getMovieById(movieId);
+        if (!movie) return;
+
+        if (!confirm(`Film "${movie.titel}" und alle zugehörigen Vorstellungen wirklich löschen?`)) {
+            return;
+        }
+
+        movies = movies.filter(m => m.id !== movieId);
+        shows = shows.filter(s => s.filmId !== movieId);
+
+        if (currentMovieId === movieId) {
+            currentMovieId = null;
+        }
+
+        renderMovieList();
+        renderShowList();
+        renderCalendar();
+        fillVorstellungFilmSelect();
+    }
+
+    // ============================
+    // Vorstellungen rendern
+    // ============================
+    function renderShowList() {
         if (!vorstellungenTbody) return;
         vorstellungenTbody.innerHTML = '';
 
-        const eintraege = vorstellungsDaten[filmTitel] || [];
-        if (!eintraege.length) {
+        let filteredShows = shows;
+        if (currentMovieId != null) {
+            filteredShows = shows.filter(s => s.filmId === currentMovieId);
+        }
+
+        if (!filteredShows.length) {
             const tr = document.createElement('tr');
             const td = document.createElement('td');
-            td.colSpan = 3;
-            td.textContent = "Keine Vorstellungen hinterlegt.";
+            td.colSpan = 5;
+            td.textContent = 'Keine Vorstellungen vorhanden.';
             tr.appendChild(td);
             vorstellungenTbody.appendChild(tr);
             return;
         }
 
-        eintraege.forEach(v => {
-            const tr = document.createElement('tr');
-            const tdDatum = document.createElement('td');
-            const tdFilm = document.createElement('td');
-            const tdZeit = document.createElement('td');
-            const tdSaal = document.createElement('td');
+        filteredShows
+            .sort((a, b) => a.datum.localeCompare(b.datum) || a.uhrzeit.localeCompare(b.uhrzeit))
+            .forEach(show => {
+                const movie = getMovieById(show.filmId);
+                const tr = document.createElement('tr');
 
-            tdDatum.textContent = v.datum;
-            tdFilm.textContent = v.titel;
-            tdZeit.textContent = v.uhrzeit;
-            tdSaal.textContent = v.saal;
+                const tdDatum = document.createElement('td');
+                const tdFilm = document.createElement('td');
+                const tdZeit = document.createElement('td');
+                const tdSaal = document.createElement('td');
+                const tdAktion = document.createElement('td');
 
-            tr.appendChild(tdDatum);
-            tr.appendChild(tdFilm);
-            tr.appendChild(tdZeit);
-            tr.appendChild(tdSaal);
-            vorstellungenTbody.appendChild(tr);
-        });
+                tdDatum.textContent = show.datum;
+                tdFilm.textContent = movie ? movie.titel : 'Unbekannt';
+                tdZeit.textContent = show.uhrzeit;
+                tdSaal.textContent = show.saal;
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.type = 'button';
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.textContent = 'Löschen';
+                deleteBtn.addEventListener('click', () => {
+                    deleteShow(show.id);
+                });
+
+                tdAktion.appendChild(deleteBtn);
+
+                tr.appendChild(tdDatum);
+                tr.appendChild(tdFilm);
+                tr.appendChild(tdZeit);
+                tr.appendChild(tdSaal);
+                tr.appendChild(tdAktion);
+
+                vorstellungenTbody.appendChild(tr);
+            });
     }
 
-    // ----------------------------
-    // KALENDER
-    // ----------------------------
+    function deleteShow(showId) {
+        const show = shows.find(s => s.id === showId);
+        if (!show) return;
+
+        const movie = getMovieById(show.filmId);
+        const filmTitel = movie ? movie.titel : 'Unbekannt';
+
+        if (!confirm(`Vorstellung von "${filmTitel}" am ${show.datum} um ${show.uhrzeit} löschen?`)) {
+            return;
+        }
+
+        shows = shows.filter(s => s.id !== showId);
+        renderShowList();
+        renderCalendar();
+    }
+
+    // ============================
+    // Kalender
+    // ============================
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
 
     function getMonatsName(monthIndex) {
         const namen = [
-            "Januar", "Februar", "März", "April", "Mai", "Juni",
-            "Juli", "August", "September", "Oktober", "November", "Dezember"
+            'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+            'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
         ];
-        return namen[monthIndex] || "";
+        return namen[monthIndex] || '';
     }
 
-    function baueKalender(filmTitel) {
+    function renderCalendar() {
         if (!kalenderBody || !kalMonatLabel) return;
 
         kalenderBody.innerHTML = '';
@@ -102,16 +318,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const firstDay = new Date(currentYear, currentMonth, 1);
         const lastDay = new Date(currentYear, currentMonth + 1, 0);
-        const startWochentag = (firstDay.getDay() + 6) % 7; // Montag = 0
+        const startWochentag = (firstDay.getDay() + 6) % 7;
         const tageImMonat = lastDay.getDate();
 
-        const eintraege = vorstellungsDaten[filmTitel] || [];
+        let relevantShows = shows;
+        if (currentMovieId != null) {
+            relevantShows = shows.filter(s => s.filmId === currentMovieId);
+        }
+
         const mapDatumZuShows = {};
-        eintraege.forEach(v => {
-            if (!mapDatumZuShows[v.datum]) {
-                mapDatumZuShows[v.datum] = [];
+        relevantShows.forEach(show => {
+            if (!mapDatumZuShows[show.datum]) {
+                mapDatumZuShows[show.datum] = [];
             }
-            mapDatumZuShows[v.datum].push(v);
+            mapDatumZuShows[show.datum].push(show);
         });
 
         let aktuellerTag = 1;
@@ -130,13 +350,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     daySpan.textContent = day;
                     td.appendChild(daySpan);
 
-                    const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+                    const dateStr =
+                        `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                     const showsForDate = mapDatumZuShows[dateStr] || [];
 
                     showsForDate.forEach(show => {
+                        const movie = getMovieById(show.filmId);
                         const ev = document.createElement('span');
                         ev.classList.add('kal-event');
-                        ev.textContent = `${show.uhrzeit} • ${show.saal}  • ${show.titel}`;
+                        ev.textContent =
+                            `${show.uhrzeit} • ${show.saal} • ${(movie && movie.titel) || 'Unbekannt'}`;
                         td.appendChild(ev);
                     });
 
@@ -149,7 +372,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Kalender-Navigation
     if (kalPrev) {
         kalPrev.addEventListener('click', () => {
             currentMonth--;
@@ -157,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentMonth = 11;
                 currentYear--;
             }
-            if (aktuellerFilm) baueKalender(aktuellerFilm);
+            renderCalendar();
         });
     }
 
@@ -168,15 +390,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentMonth = 0;
                 currentYear++;
             }
-            if (aktuellerFilm) baueKalender(aktuellerFilm);
+            renderCalendar();
         });
     }
 
-    // ----------------------------
-    // ANSICHT UMSCHALTEN
-    // ----------------------------
+    // ============================
+    // Ansicht umschalten
+    // ============================
     function setView(mode) {
-        if (!listenView || !kalenderView) return;
+        if (!listenView || !kalenderView || !btnViewList || !btnViewCalendar) return;
 
         if (mode === 'list') {
             listenView.classList.remove('hidden');
@@ -188,62 +410,149 @@ document.addEventListener('DOMContentLoaded', () => {
             kalenderView.classList.remove('hidden');
             btnViewList.classList.remove('active-view');
             btnViewCalendar.classList.add('active-view');
-
-            if (aktuellerFilm) {
-                baueKalender(aktuellerFilm);
-            }
         }
     }
 
-    if (btnViewList) {
-        btnViewList.addEventListener('click', () => setView('list'));
-    }
-    if (btnViewCalendar) {
-        btnViewCalendar.addEventListener('click', () => setView('calendar'));
-    }
+    btnViewList?.addEventListener('click', () => setView('list'));
+    btnViewCalendar?.addEventListener('click', () => setView('calendar'));
 
-    // ----------------------------
-    // FILM-KLICK HANDLING
-    // ----------------------------
-    movieItems.forEach(item => {
-        item.addEventListener('click', () => {
-            // Titel aus data-Attribut lesen
-            aktuellerFilm = item.dataset.titel;
-            fuelleVorstellungenListe(aktuellerFilm);
-
-            // Wenn gerade Kalender sichtbar ist, auch aktualisieren
-            if (!kalenderView.classList.contains('hidden')) {
-                baueKalender(aktuellerFilm);
-            }
-        });
+    // ============================
+    // Modals / Form-Handling
+    // ============================
+    btnOpenFilmModal?.addEventListener('click', () => {
+        // Felder leeren
+        filmTitelInput.value = '';
+        filmBeschreibungInput.value = '';
+        filmFskInput.value = '';
+        filmFormatInput.value = '';
+        filmKategorieInput.value = '';
+        filmPreisInput.value = '';
+        openModal('film');
     });
 
-    // Optional: ersten Film direkt auswählen
-    const firstMovie = movieItems[0];
-    if (firstMovie) {
-        firstMovie.click();
-    }
+    btnOpenVorstellungModal?.addEventListener('click', () => {
+        fillVorstellungFilmSelect();
+        vorstellungDatumInput.value = '';
+        vorstellungZeitInput.value = '';
+        vorstellungSaalInput.value = '';
+        openModal('show');
+    });
 
-    function openProfileModal() {
-        if (!overlay || !modalProfile) return;
+    closeFilmModal?.addEventListener('click', closeModal);
+    closeVorstellungModal?.addEventListener('click', closeModal);
 
+    modalOverlay?.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            closeModal();
+        }
+    });
 
+    filmSaveBtn?.addEventListener('click', () => {
+        const titel = filmTitelInput.value.trim();
+        const beschr = filmBeschreibungInput.value.trim();
+        const fsk = filmFskInput.value;
+        const format = filmFormatInput.value;
+        const kat = filmKategorieInput.value.trim() || 'Allgemein';
+        const preis = parseFloat(filmPreisInput.value.replace(',', '.'));
 
-    }
-    if (openProfileBtn) {
-        openProfileBtn.addEventListener("click", openProfileModal);
-    }
-    if (saveBtn) {
-        saveBtn.addEventListener("click", () => {
+        if (!titel || !fsk || !format || isNaN(preis)) {
+            alert('Bitte mindestens Titel, FSK, Format und Preis korrekt ausfüllen.');
+            return;
+        }
 
-                //Daten ans Backend geben
+        const newMovie = {
+            id: nextMovieId++,
+            titel,
+            beschreibung: beschr,
+            fsk,
+            format,
+            kategorie: kat,
+            preis
+        };
 
+        movies.push(newMovie);
+        closeModal();
+        renderMovieList();
+        fillVorstellungFilmSelect();
+    });
+
+    function fillVorstellungFilmSelect() {
+        if (!vorstellungFilmSelect) return;
+        vorstellungFilmSelect.innerHTML = '';
+
+        if (!movies.length) {
+            const opt = document.createElement('option');
+            opt.value = '';
+            opt.textContent = 'Keine Filme vorhanden';
+            vorstellungFilmSelect.appendChild(opt);
+            vorstellungFilmSelect.disabled = true;
+            return;
+        }
+
+        vorstellungFilmSelect.disabled = false;
+
+        movies.forEach(movie => {
+            const opt = document.createElement('option');
+            opt.value = String(movie.id);
+            opt.textContent = movie.titel;
+            if (movie.id === currentMovieId) {
+                opt.selected = true;
             }
-            // TODO: später per fetch() ans Backend schicken
-            hideOverlay();
+            vorstellungFilmSelect.appendChild(opt);
         });
-}
-if (closeProfileBtn) {
-    closeProfileBtn.addEventListener("click", hideOverlay);
-}
+    }
+
+    vorstellungSaveBtn?.addEventListener('click', () => {
+        const filmIdStr = vorstellungFilmSelect.value;
+        const datum = vorstellungDatumInput.value;
+        const zeit = vorstellungZeitInput.value;
+        const saal = vorstellungSaalInput.value.trim();
+
+        const filmId = parseInt(filmIdStr, 10);
+        const movie = getMovieById(filmId);
+
+        if (!movie || !datum || !zeit || !saal) {
+            alert('Bitte Film, Datum, Uhrzeit und Saal ausfüllen.');
+            return;
+        }
+
+        const newShow = {
+            id: nextShowId++,
+            filmId,
+            datum,
+            uhrzeit: zeit,
+            saal
+        };
+
+        shows.push(newShow);
+        closeModal();
+        renderShowList();
+        renderCalendar();
+    });
+
+    // ============================
+    // Filter / Suche
+    // ============================
+    function applyFilter() {
+        renderMovieList();
+    }
+
+    btnFilterApply?.addEventListener('click', applyFilter);
+
+    suchBtn?.addEventListener('click', applyFilter);
+
+    filmSuche?.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') {
+            applyFilter();
+        }
+    });
+
+    // ============================
+    // Initial
+    // ============================
+    setView('list');
+    renderMovieList();
+    renderShowList();
+    renderCalendar();
+    fillVorstellungFilmSelect();
 });
