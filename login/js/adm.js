@@ -2,18 +2,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // DOM-Referenzen
     const vorstellungenTbody = document.getElementById('vorstellungenTbody');
 
-    const listenView      = document.getElementById('listenView');
-    const kalenderView    = document.getElementById('kalenderView');
+    const listenView = document.getElementById('listenView');
+    const kalenderView = document.getElementById('kalenderView');
 
-    const btnViewList     = document.getElementById('btnViewList');
+    const btnViewList = document.getElementById('btnViewList');
     const btnViewCalendar = document.getElementById('btnViewCalendar');
 
-    const kalenderBody    = document.getElementById('kalenderBody');
-    const kalMonatLabel   = document.getElementById('kalMonatLabel');
-    const kalPrev         = document.getElementById('kalPrev');
-    const kalNext         = document.getElementById('kalNext');
+    const kalenderBody = document.getElementById('kalenderBody');
+    const kalMonatLabel = document.getElementById('kalMonatLabel');
+    const kalPrev = document.getElementById('kalPrev');
+    const kalNext = document.getElementById('kalNext');
 
-    const movieItems      = document.querySelectorAll('.movie-list .movie-item');
+    const movieItems = document.querySelectorAll('.movie-list .movie-item');
+
+    //FFilm hinzufügen
+    const listTitel = document.getElementById("listTitel");
+    const listBeschreibung = document.getElementById("listBeschreibung");
+    const listFsk = document.getElementById("listFsk");
+    const listKategorie = document.getElementById("listKategorie");
+    const listPreis = document.getElementById("listPreis");
+
+    const modelTitel = document.getElementById("modelTitel");
+    const modelBeschreibung = document.getElemntById("mdoelBeschreibung");
+    const modelFsk = document.getElemntById("modelFsk");
+    const modelKategorie = document.getElemntById("modelKategorie");
+    const modelPreis = document.getElemntById("modelPreis");
+
 
     // aktuell ausgewählter Film
     let aktuellerFilm = null;
@@ -22,10 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Du kannst das später aus deinem Backend füllen
     const vorstellungsDaten = {
         "Kampf der Titanen": [
-            { datum: "2025-11-27",titel: "Kampf der Titanen", uhrzeit: "20:00", saal: "Saal 1" },
-            { datum: "2025-11-28",titel: "Kampf der Titanen", uhrzeit: "18:30", saal: "Saal 2" }
+            { datum: "2025-11-27", titel: "Kampf der Titanen", uhrzeit: "20:00", saal: "Saal 1" },
+            { datum: "2025-11-28", titel: "Kampf der Titanen", uhrzeit: "18:30", saal: "Saal 2" }
         ]
-        // weiterer Film: "Titel": [ ... ]
+
     };
 
     // ----------------------------
@@ -49,14 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
         eintraege.forEach(v => {
             const tr = document.createElement('tr');
             const tdDatum = document.createElement('td');
-            const tdFilm  = document.createElement('td');
-            const tdZeit  = document.createElement('td');
-            const tdSaal  = document.createElement('td');
+            const tdFilm = document.createElement('td');
+            const tdZeit = document.createElement('td');
+            const tdSaal = document.createElement('td');
 
             tdDatum.textContent = v.datum;
-            tdFilm.textContent  = v.titel;
-            tdZeit.textContent  = v.uhrzeit;
-            tdSaal.textContent  = v.saal;
+            tdFilm.textContent = v.titel;
+            tdZeit.textContent = v.uhrzeit;
+            tdSaal.textContent = v.saal;
 
             tr.appendChild(tdDatum);
             tr.appendChild(tdFilm);
@@ -70,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // KALENDER
     // ----------------------------
     let currentMonth = new Date().getMonth();
-    let currentYear  = new Date().getFullYear();
+    let currentYear = new Date().getFullYear();
 
     function getMonatsName(monthIndex) {
         const namen = [
@@ -87,9 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
         kalMonatLabel.textContent = `${getMonatsName(currentMonth)} ${currentYear}`;
 
         const firstDay = new Date(currentYear, currentMonth, 1);
-        const lastDay  = new Date(currentYear, currentMonth + 1, 0);
+        const lastDay = new Date(currentYear, currentMonth + 1, 0);
         const startWochentag = (firstDay.getDay() + 6) % 7; // Montag = 0
-        const tageImMonat    = lastDay.getDate();
+        const tageImMonat = lastDay.getDate();
 
         const eintraege = vorstellungsDaten[filmTitel] || [];
         const mapDatumZuShows = {};
@@ -209,4 +223,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (firstMovie) {
         firstMovie.click();
     }
+
+    function openProfileModal() {
+        if (!overlay || !modalProfile) return;
+
+
+
+    }
+    if (openProfileBtn) {
+        openProfileBtn.addEventListener("click", openProfileModal);
+    }
+    if (saveBtn) {
+        saveBtn.addEventListener("click", () => {
+
+                //Daten ans Backend geben
+
+            }
+            // TODO: später per fetch() ans Backend schicken
+            hideOverlay();
+        });
+}
+if (closeProfileBtn) {
+    closeProfileBtn.addEventListener("click", hideOverlay);
+}
 });

@@ -24,71 +24,63 @@
 
         <!-- LINKE SPALTE: FILME -->
         <section class="column left-column">
-            
+
             <h2>Filme</h2>
 
             <section class="filter">
-            <h3 class="filter-title">Filtern nach</h3>
+                <h3 class="filter-title">Filtern nach</h3>
 
-            <div class="filter-row">
-                <div class="filter-field">
-                    <label>Format</label>
-                    <select>
+                <div class="filter-row">
+                    <div class="filter-field">
+                        <label>Format</label>
+                        <select>
                         <option value="">Alle</option>
                         <option value="2d">2D</option>
                         <option value="3d">3D</option>
                     </select>
-                </div>
+                    </div>
 
-                <div class="filter-field">
-                    <label>FSK</label>
-                    <select>
+                    <div class="filter-field">
+                        <label>FSK</label>
+                        <select>
                         <option value="">Alle</option>
                         <option>6</option>
                         <option>12</option>
                         <option>16</option>
                         <option>18</option>
                     </select>
-                </div>
+                    </div>
 
-                
 
-                <div class="filter-field">
-                    <label>Stil</label>
-                    <select>
+
+                    <div class="filter-field">
+                        <label>Stil</label>
+                        <select>
                         <option value="">Alle</option>
                         <option>Horror</option>
                         <option>Komödie</option>
                     </select>
-                </div>
-                
-                
-                
-                <div class="filter-field-btn">
-                    <button class="btn btn-green" type="button">Anwenden</button>
-                </div>
-                
-            <div class = "filter-search">
-                <input class="search" type="text" id="filmSuche" placeholder="Film suchen...">
-                <button class="btn btn-green" type="button" id="suchBtn">Suchen</button>
-                
-                <button class="btn-add" type="button" id="suchBtn">FIlm hinzufügem</button>
-                         
-                     
+                    </div>
+
+
+                    <div class="filter-field-btn">
+                        <button class="btn btn-green" type="button">Anwenden</button>
+                    </div>
+
+                    <div class="filter-search">
+                        <input class="search" type="text" id="filmSuche" placeholder="Film suchen...">
+                        <button class="btn btn-green" type="button" id="suchBtn">Suchen</button>
+                        
+                        <button class="btn-add" type="button" id="suchBtn">FIlm hinzufügem</button>
+                        
+                        
                     </section>
                 </div>
                 <br>
                 <aside class="liste">
-                <ul class="movie-list">
-                    <!-- Beispiel-Film -->
-                    <li class="movie-item"
-                        data-movie-id="1"
-                        data-titel="Kampf der Titanen"
-                        data-beschreibung="Spannender Actionfilm."
-                        data-fsk="16"
-                        data-format="3D"
-                        data-kategorie="Action"
-                        data-preis="12.99">
+                    <ul class="movie-list">
+                        <!-- Hier eine schleife einbauen die die Daten aus java Script bekommt und weiter gibt dann eine lsite baut  -->
+                    <li class="movie-item" data-movie-id="1" data-titel="Kampf der Titanen" data-beschreibung="Spannender Actionfilm." data-fsk="16" data-format="3D" data-kategorie="Action" data-preis="12.99">
                         <div class="movie-row">
                             <div class="movie-info">
                                 <div class="movie-title">Kampf der Titanen</div>
@@ -100,30 +92,26 @@
                         </div>
                     </li>
 
-                    <!-- Weitere Filme kannst du genauso ergänzen -->
-                    <!--
-                    <li class="movie-item" data-movie-id="2" data-titel="…" ...>…</li>
-                    -->
                 </ul>
             </aside>
         </section>
-
+s
         <!-- RECHTE SPALTE: VORSTELLUNGEN & KALENDER -->
         <section class="column right-column">
             <h2>Vorstellungen</h2>
 
             <div class="film-vorstellung-btns">
                 <button class="add-session-btn" type="button">Vorstellung hinzufügen</button>
-          </div>
-                <!-- Toggle Vorstellungen / Kalender -->
-                <div class="view-toggle">
-                    <button id="btnViewList" class="btn-small active-view" type="button">
+            </div>
+            <!-- Toggle Vorstellungen / Kalender -->
+            <div class="view-toggle">
+                <button id="btnViewList" class="btn-small active-view" type="button">
                         Vorstellungen
                     </button>
-                    <button id="btnViewCalendar" class="btn-small" type="button">
+                <button id="btnViewCalendar" class="btn-small" type="button">
                         Kalender
                     </button>
-                </div>
+            </div>
             </div>
 
             <!-- LISTENANSICHT DER VORSTELLUNGEN -->
@@ -174,8 +162,90 @@
         </section>
 
     </main>
+    <div id="modalOverlay" class="modal-overlay hidden">
+        <!-- Modal 1: Film hinzufügen -->
+        <div class="modal passwort-check" id="modalProfile">
+            <button class="modal-close" id="modalCloseProfile">&times;</button>
+            <h2>Film hinzufügen</h2>
+            <p>Hier können sie neue Filme anlegen</p>
 
-    <script src="js/adm.js" defer></script>
+            <section class="modal-left-column">
+                <div class="acc-info-details-field">
+                    <p><strong> Filmname</strong></p>
+                    <input class="modal-input" type="text" id="ModelinhaltFilmname">
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>Beschreibung </strong></p>
+                    <input class="modal-input" type="email" id="ModelinhaltBeschreibung">
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>FSK </strong></p>
+                    <select idl="ModelInhaltFsk">
+                        <option value="">Bitte auswählen</option>
+                        <option value="0" >0</option>
+                        <option value="6" >6</option>
+                        <option value="12">12</option>
+                        <option value="16">16</option>
+                        <option value="18">18</option>
+                    </select>
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong></strong></p>
+
+                    <div class="film-create-details-field">
+                        <p><strong>Preis pro Karte: </strong></p>
+                        <input class="modal-input" type="number" id="ModelinhaltPreis">
+                    </div>
+
+                    <div class="btn btn-change" id="Save">Speichern</div>
+            </section>
+        </div>
+
+         <div class="modal passwort-check" id="modalProfile">
+            <button class="modal-close" id="modalCloseProfile">&times;</button>
+            <h2>Vorstellung hinzufügen</h2>
+            <p>Hier können Sie neue Vorstellungen anlegen</p>
+
+            <section class="modal-left-column">
+                
+                <div class="film-create-details-field">
+                    <p><strong>Film </strong></p>
+                    <select>
+                        <option value="">Bitte auswählen</option>
+                        <!--Bitte eine lsite anfügen die alle Filme zeigt die es Momentan gibt -->
+                    </select>
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>Datum</strong></p>
+                    <input type="date">
+                    <div>
+                
+                <div class="film-create-details-field">
+                    <p><strong>Zeit</strong></p>
+                    <input type="Time">
+                    <div>
+
+                <div class="film-create-details-field">
+                    <p><strong>Saal</strong></p>
+                    <select>
+                        <option value="">Bitte auswählen</option>
+                        <!--Bitte eine lsite anfügen die alle Säale zeigt die es Momentan gibt -->
+                    </select>
+                    <div>
+
+                    <div class="btn btn-change" id="Save">Speichern</div>
+            </section>
+        </div>
+
+    </div>
+
+        <script src="js/adm.js" defer></script>
 </body>
+
+</html>
 
 </html>
