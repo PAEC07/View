@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kino – Filmübersicht</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="topbar-right">
+        <a href="login.html" class="btn-outline">Login</a>
+        <img src="img/kino_logo_whitebg.png" alt="Kino Logo" class="logo-round">
+    </div>
+</header>
+
+<main class="page">
+
+    <!-- LINKE SPALTE: Filter + Filmliste -->
+    <section class="left-column">
+
+        <!-- FILTER -->
+        <section class="filter">
+            <h3 class="filter-title">Filtern nach</h3>
+
+            <div class="filter-row">
+                <div class="filter-field">
+                    <label>Format</label>
+                    <select id="filterFormat">
+                        <option value="">Alle</option>
+                        <option value="2D">2D</option>
+                        <option value="3D">3D</option>
+                    </select>
+                </div>
+
+                <div class="filter-field">
+                    <label>FSK</label>
+                    <select id="filterFsk">
+                        <option value="">Alle</option>
+                        <option value="6">6</option>
+                        <option value="12">12</option>
+                        <option value="16">16</option>
+                        <option value="18">18</option>
+                    </select>
+                </div>
+
+                <div class="filter-field">
+                    <label>Bereich</label>
+                    <select id="filterBereich">
+                        <option value="">Alle</option>
+                        <option value="Parkett">Parkett</option>
+                        <option value="Loge">Loge</option>
+                    </select>
+                </div>
+
+                <div class="filter-field">
+                    <label>Stil</label>
+                    <select id="filterStil">
+                        <option value="">Alle</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Komödie">Komödie</option>
+                        <option value="Action">Action</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                    </select>
+                </div>
+
+                <div class="filter-field">
+                    <label>Datum</label>
+                    <input id="FilterDatum" type="date">
+                </div>
+
+                <div class="filter-field-btn">
+                    <button class="btn btn-green" type="button" id="btnFilterApply">Anwenden</button>
+                </div>
+            </div>
+
+            <div class="filter-search">
+                <input class="search" type="text" id="filmSuche" placeholder="Film suchen...">
+                <button class="btn btn-grey" type="button" id="suchBtn">Suchen</button>
+            </div>
+        </section>
+
+        <!-- FILMLISTE -->
+        <aside class="liste" id="filmListe">
+            <h2>Filme</h2>
+            <ul>
+                <li data-titel="Film 1"
+                    data-beschreibung="Spannender Actionfilm."
+                    data-fsk="16"
+                    data-format="3D"
+                    data-kategorie="Action"
+                    data-bereich="Parkett"
+                    data-preis="12.99">
+                    Film 1
+                </li>
+                <li data-titel="Film 2"
+                    data-beschreibung="Romantische Komödie."
+                    data-fsk="12"
+                    data-format="2D"
+                    data-kategorie="Komödie"
+                    data-bereich="Loge"
+                    data-preis="9.99">
+                    Film 2
+                </li>
+                <li data-titel="Film 3"
+                    data-beschreibung="Science-Fiction Abenteuer."
+                    data-fsk="6"
+                    data-format="3D"
+                    data-kategorie="Sci-Fi"
+                    data-bereich="Parkett"
+                    data-preis="14.50">
+                    Film 3
+                </li>
+            </ul>
+        </aside>
+
+    </section>
+
+    <!-- RECHTE SPALTE: Inhalt / Buchung -->
+    <section class="right-column">
+
+        <!-- INHALT -->
+        <section id="inhaltBox" class="inhalt">
+            <h2 id="inhaltTitel">Bitte einen Film auswählen</h2>
+
+            <div id="detailsWrapper" class="hidden">
+                <div class="details-row">
+                    <div class="details-left">
+                        <div><strong>FSK: </strong><span id="infoFsk"></span></div>
+                        <div><strong>Format: </strong><span id="infoFormat"></span></div>
+                        <div><strong>Kategorie: </strong><span id="infoKategorie"></span></div>
+                        <div><strong>Preis pro Karte: </strong><span id="infoPreis"></span></div>
+                    </div>
+                    <div class="details-right">
+                        <p id="inhaltText"></p>
+                    </div>
+                </div>
+
+                <!-- Toggle Vorstellungen / Kalender -->
+                <div class="view-toggle">
+                    <button id="btnViewList" class="btn btn-small active-view" type="button">
+                        Vorstellungen
+                    </button>
+                    <button id="btnViewCalendar" class="btn btn-small" type="button">
+                        Kalender
+                    </button>
+                </div>
+
+                <!-- LISTENANSICHT DER VORSTELLUNGEN -->
+                <div class="details-table-wrapper" id="listenView">
+                    <table class="details-table">
+                        <thead>
+                            <tr>
+                                <th>Datum</th>
+                                <th>Uhrzeit</th>
+                                <th>Saal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vorstellungenTbody">
+                            <!-- per JS gefüllt -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- KALENDER-ANSICHT DER VORSTELLUNGEN -->
+                <section id="kalenderView" class="kalender-view hidden">
+                    <h3>Kalenderansicht</h3>
+
+                    <div class="kalender-header">
+                        <button id="kalPrev" class="btn btn-grey" type="button">&lt;</button>
+                        <span id="kalMonatLabel"></span>
+                        <button id="kalNext" class="btn btn-grey" type="button">&gt;</button>
+                    </div>
+
+                    <table class="kalender-tabelle">
+                        <thead>
+                            <tr>
+                                <th>Mo</th>
+                                <th>Di</th>
+                                <th>Mi</th>
+                                <th>Do</th>
+                                <th>Fr</th>
+                                <th>Sa</th>
+                                <th>So</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kalenderBody">
+                            <!-- wird von app.js generiert -->
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+
+            <div class="buttons-row" id="buchen">
+                <button id="buchenBtn" class="btn btn-green" type="button">Buchen</button>
+            </div>
+        </section>
+
+        <!-- BUCHUNGS-BEREICH -->
+<section class="buchen-box hidden" id="buchenBox">
+    <h2>Buchung</h2>
+
+    <!-- Info zur gewählten Vorstellung -->
+    <p id="buchungVorstellungInfo" class="inhalt-text buchung-vorstellung-info">
+        Ausgewählte Vorstellung: keine
+    </p>
+
+    <p class="inhalt-text">
+        Wähle deine Sitzplätze und trage für jeden Platz die passende Ermäßigung ein.
+    </p>
+
+            <div class="buchung-rahmen">
+
+                <!-- SITZPLATZAUSWAHL -->
+                <div class="sitzplan-bereich">
+                    <h3>Sitzplatzauswahl</h3>
+
+                    <div class="sitzlegende">
+                        <span class="legend standard"></span> Normal (Parkett)
+                        <span class="legend premium"></span> Premium (Loge)
+                        <span class="legend belegt"></span> Belegt
+                    </div>
+
+                    <div class="sitzplan">
+                        <div class="leinwand">Leinwand</div>
+                        <div class="sitzreihen" id="sitzContainer">
+                            <!-- Sitze werden per JS erzeugt -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PREISE + TICKETS -->
+                <div class="buchung-grid">
+
+                    <!-- linke Spalte: Preisübersicht -->
+                    <div class="buchung-col" id="preisSpalte">
+                        <h3>Preis</h3>
+                        <div class="preis-zeile">
+                            Erwachsene
+                            <span id="preisErwachsene">0,00 €</span>
+                        </div>
+                        <div class="preis-zeile">
+                            Studenten
+                            <span>-20 %</span>
+                        </div>
+                        <div class="preis-zeile">
+                            Senioren
+                            <span>-15 %</span>
+                        </div>
+                        <div class="preis-zeile">
+                            Kinder
+                            <span>-30 %</span>
+                        </div>
+                    </div>
+
+                    <!-- rechte Spalte: Tickets nach Sitz -->
+                    <div class="buchung-col">
+                        <h3>Tickets</h3>
+
+                        <table class="tickets-tabelle">
+                            <thead>
+                                <tr>
+                                    <th>Platz</th>
+                                    <th>Bereich</th>
+                                    <th>Ermäßigung</th>
+                                    <th>Preis</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ticketsTbody">
+                                <!-- wird per JS gefüllt -->
+                            </tbody>
+                        </table>
+
+                        <p class="auswahl-info">
+                            Ausgewählte Plätze:
+                            <span id="ausgewaehlteSitze">keine</span>
+                        </p>
+                    </div>
+
+                    <!-- Summe über ganze Breite -->
+                    <div class="summe-row">
+                        <strong>Summe:</strong>
+                        <span id="summeAnzeige">0,00 €</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons-row">
+                <button class="btn btn-grey" id="zurueckBtn" type="button">Zurück</button>
+                <button class="btn btn-green" id="bezahlenBtn" type="button">Bezahlen</button>
+            </div>
+        </section>
+
+    </section>
+
+</main>
+
+<script src="js/app.js" defer></script>
+
+</body>
+</html>

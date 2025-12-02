@@ -1,0 +1,334 @@
+/* =============================
+   GLOBAL SETTINGS
+============================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color: #f5f5f5;
+}
+
+
+/* =============================
+   TOPBAR
+============================= */
+
+.topbar {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 30px;
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-outline {
+    padding: 10px 22px;
+    border-radius: 6px;
+    border: 2px solid #3cb371;
+    text-decoration: none;
+    color: #3cb371;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.btn-outline:hover {
+    background: #3cb371;
+    color: #ffffff;
+}
+
+.logo-round {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: contain;
+    background: #ffffff;
+    padding: 6px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* =============================
+   PAGE LAYOUT
+============================= */
+
+.page {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    min-height: calc(100vh - 110px);
+}
+
+.left-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =============================
+   TICKETS PANEL (LEFT SIDE)
+============================= */
+
+.liste {
+    background: #ffffff;
+    border-radius: 8px;
+    border-left: 5px solid #c0392b;
+    padding: 20px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
+    flex: 1;
+}
+
+.liste h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.liste ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.liste li {
+    background: #ffffff;
+    border: 2px solid #c0392b;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+
+/* Zeile im Ticket – links Infos, rechts Button */
+
+.ticket-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+
+/* Infos links gestapelt */
+
+.ticket-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.ticket-meta {
+    font-size: 16px;
+    color: #555;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+
+/* Stornieren-Button im Ticket */
+
+.ticket-cancel-btn {
+    justify-content: right;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 12px;
+    background: #c0392b;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.ticket-info-btn {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 12px;
+    background: #462bc0;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.ticket-cancel-btn:hover {
+    filter: brightness(90%);
+}
+
+.ticket-info-btn:hover {
+    filter: brightness(90%);
+}
+
+
+/* =============================
+   ACCOUNT DETAILS (RIGHT SIDE)
+============================= */
+
+.Acc-DetailsWrapper {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 5px solid #452abb;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.AccDetails-top {
+    margin-top: 0;
+    font-size: 28px;
+}
+
+#AccDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+
+/* Info-Felder rechts */
+
+.acc-info-details-field {
+    border: 1px solid #bbb;
+    padding: 12px;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+.acc-info-details-field p {
+    margin: 0;
+    font-size: 18px;
+}
+
+
+/* =============================
+   BUTTON: ÄNDERN (rechts & im Modal)
+============================= */
+
+.btn-change {
+    padding: 12px 36px;
+    border-radius: 18px;
+    border: none;
+    background: #452abb;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-top: 20px;
+}
+
+.btn-change:hover {
+    filter: brightness(90%);
+}
+
+.btn-change:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+
+/* =============================
+   MODAL OVERLAY
+============================= */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    /* wird per JS sichtbar gemacht */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: #ffffff;
+    padding: 20px 24px;
+    border-radius: 8px;
+    min-width: 320px;
+    max-width: 520px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+
+/* X-Button oben rechts im Modal */
+
+.modal-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+/* Inhalt im Modal */
+
+.modal-left-column {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+
+/* Speichern-Button innen etwas kleiner, aber gleiche Klasse */
+
+#Save {
+    margin-top: 10px;
+    align-self: flex-end;
+    font-size: 18px;
+    padding-inline: 24px;
+}
+
+.hidden {
+    display: none;
+}

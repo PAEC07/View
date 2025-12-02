@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kino – Adminbereich</title>
+    <link rel="stylesheet" href="css/adm.css">
+</head>
+
+<body>
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="topbar-right">
+            <strong>Admin-Bereich</strong>
+            <a href="login.html" class="btn-outline">Abmelden</a>
+            <a href="index.html" class="btn-outline">Zurück</a>
+            <img src="img/kino_logo_whitebg.png" alt="Kino Logo" class="logo-round">
+        </div>
+    </header>
+
+    <!-- HAUPTBEREICH -->
+    <main class="page">
+
+        <!-- LINKE SPALTE: FILME -->
+        <section class="column left-column">
+            <h2>Filme</h2>
+
+            <!-- FILTER / SUCHE / FILM HINZUFÜGEN -->
+            <section class="filter">
+                <h3 class="filter-title">Filtern nach</h3>
+
+                <div class="filter-row">
+                    <div class="filter-field">
+                        <label>Format</label>
+                        <select id="filterFormat">
+                            <option value="">Alle</option>
+                            <option value="2D">2D</option>
+                            <option value="3D">3D</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field">
+                        <label>FSK</label>
+                        <select id="filterFsk">
+                            <option value="">Alle</option>
+                            <option value="0">0</option>
+                            <option value="6">6</option>
+                            <option value="12">12</option>
+                            <option value="16">16</option>
+                            <option value="18">18</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field">
+                        <label>Stil</label>
+                        <select id="filterStil">
+                            <option value="">Alle</option>
+                            <option value="Action">Action</option>
+                            <option value="Komödie">Komödie</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Sci-Fi">Sci-Fi</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field-btn">
+                        <button class="btn btn-green" type="button" id="btnFilterApply">Anwenden</button>
+                    </div>
+                </div>
+
+                <div class="filter-search">
+                    <input class="search" type="text" id="filmSuche" placeholder="Film suchen...">
+                    <button class="btn btn-grey" type="button" id="suchBtn">Suchen</button>
+                    <button class="btn-add" type="button" id="btnOpenFilmModal">Film hinzufügen</button>
+                </div>
+            </section>
+
+            <aside class="liste">
+                <ul class="movie-list" id="movieList">
+                    <!-- per JS gefüllt -->
+                </ul>
+            </aside>
+        </section>
+
+        <!-- RECHTE SPALTE: VORSTELLUNGEN & KALENDER -->
+        <section class="column right-column">
+            <h2>Vorstellungen</h2>
+
+            <div class="film-vorstellung-btns">
+                <button class="add-session-btn" type="button" id="btnOpenVorstellungModal">
+                    Vorstellung hinzufügen
+                </button>
+            </div>
+
+            <!-- Toggle Vorstellungen / Kalender -->
+            <div class="view-toggle">
+                <button id="btnViewList" class="btn-small active-view" type="button">
+                    Vorstellungen
+                </button>
+                <button id="btnViewCalendar" class="btn-small" type="button">
+                    Kalender
+                </button>
+            </div>
+
+            <!-- LISTENANSICHT DER VORSTELLUNGEN -->
+            <div class="details-table-wrapper" id="listenView">
+                <table class="details-table">
+                    <thead>
+                        <tr>
+                            <th>Datum</th>
+                            <th>Film</th>
+                            <th>Uhrzeit</th>
+                            <th>Saal</th>
+                            <th>Aktion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vorstellungenTbody">
+                        <!-- per JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- KALENDER-ANSICHT DER VORSTELLUNGEN -->
+            <section id="kalenderView" class="kalender-view hidden">
+                <h3>Kalenderansicht</h3>
+
+                <div class="kalender-header">
+                    <button id="kalPrev" class="btn-grey" type="button">&lt;</button>
+                    <span id="kalMonatLabel"></span>
+                    <button id="kalNext" class="btn-grey" type="button">&gt;</button>
+                </div>
+
+                <table class="kalender-tabelle">
+                    <thead>
+                        <tr>
+                            <th>Mo</th>
+                            <th>Di</th>
+                            <th>Mi</th>
+                            <th>Do</th>
+                            <th>Fr</th>
+                            <th>Sa</th>
+                            <th>So</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kalenderBody">
+                        <!-- per JS -->
+                    </tbody>
+                </table>
+            </section>
+
+        </section>
+
+    </main>
+
+    <!-- MODAL OVERLAY -->
+    <div id="modalOverlay" class="modal-overlay hidden">
+
+        <!-- Modal: Film hinzufügen -->
+        <div class="modal" id="modalFilm">
+            <button class="modal-close" id="closeFilmModal">&times;</button>
+            <h2>Film hinzufügen</h2>
+            <p>Hier können Sie neue Filme anlegen.</p>
+
+            <section class="modal-left-column">
+                <div class="film-create-details-field">
+                    <p><strong>Filmtitel</strong></p>
+                    <input class="modal-input" type="text" id="filmTitelInput">
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>Beschreibung</strong></p>
+                    <textarea class="modal-input" id="filmBeschreibungInput"></textarea>
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>FSK</strong></p>
+                    <select id="filmFskInput" class="modal-input">
+                        <option value="">Bitte auswählen</option>
+                        <option value="0">0</option>
+                        <option value="6">6</option>
+                        <option value="12">12</option>
+                        <option value="16">16</option>
+                        <option value="18">18</option>
+                    </select>
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>Format</strong></p>
+                    <select id="filmFormatInput" class="modal-input">
+                        <option value="">Bitte auswählen</option>
+                        <option value="2D">2D</option>
+                        <option value="3D">3D</option>
+                    </select>
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>Stil / Kategorie</strong></p>
+                    <input class="modal-input" type="text" id="filmKategorieInput" placeholder="z.B. Action, Komödie">
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>Preis pro Karte (€)</strong></p>
+                    <input class="modal-input" type="number" min="0" step="0.01" id="filmPreisInput">
+                </div>
+
+                <div class="film-create-details-field">
+                    <button class="btn btn-green" id="filmSaveBtn" type="button">Speichern</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Modal: Vorstellung hinzufügen -->
+        <div class="modal hidden" id="modalVorstellung">
+            <button class="modal-close" id="closeVorstellungModal">&times;</button>
+            <h2>Vorstellung hinzufügen</h2>
+            <p>Hier können Sie neue Vorstellungen anlegen.</p>
+
+            <section class="modal-left-column">
+                <div class="film-create-details-field">
+                    <p><strong>Film</strong></p>
+                    <select id="vorstellungFilmSelect" class="modal-input">
+                        <!-- per JS mit Filmen gefüllt -->
+                    </select>
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>Datum</strong></p>
+                    <input class="modal-input" type="date" id="vorstellungDatumInput">
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>Uhrzeit</strong></p>
+                    <input class="modal-input" type="time" id="vorstellungZeitInput">
+                </div>
+
+                <div class="film-create-details-field">
+                    <p><strong>Saal</strong></p>
+                    <input class="modal-input" type="text" id="vorstellungSaalInput" placeholder="z.B. Saal 1">
+                </div>
+
+                <div class="film-create-details-field">
+                    <button class="btn btn-green" id="vorstellungSaveBtn" type="button">Speichern</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/adm.js" defer></script>
+</body>
+
+</html>
